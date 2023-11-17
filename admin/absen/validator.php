@@ -202,19 +202,33 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="card text-center">
                         <div class="card-header">
-                            Featured
+                            Validation
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $validation ?></h5>
-                            <p class="card-text">all information from our primary database If there is a problem, contact the administrator</p>
-                            <p style="font-size: 14px;" class="card-text">Nama Siswa: <?php echo $nama ?></span></p>
-                            <p style="font-size: 14px;" class="card-text">Kelas: <?php echo $faculty ?></span></p>
-                            <p style="font-size: 14px;" class="card-text">Date : <?php echo $capture_date ?></span></p>
-                            <p style="font-size: 14px;" class="card-text">Capture Time : <?php echo $capture_time ?></span></p>
-                            <a href="index.php" class="btn btn-primary">Go Scanner Page</a>
-                        </div>
+                        <form method="POST" action="proses/proses_tambah.php" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <label for="nisn">NISN</label>
+                                <input type="text" name="nisn" id="nisn" required="required" value="<?php echo $index ?>" autocomplete="off" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="nama">Nama</label>
+                                <input type="text" name="nama" id="nama" required="required" value="<?php echo $nama ?>" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="kelas">Kelas</label>
+                                <input type="text" name="kelas" id="kelas" required="required" value="<?php echo $faculty ?>" autocomplete="off" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="jam_kehadiran">Capture Date</label>
+                                <input type="text" name="jam_kehadiran" id="jam_kehadiran" required="required" value="<?php echo $capture_date ?> <?php echo $capture_time ?>"" autocomplete="off" class="form-control" readonly>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-primary" name="tambah">Confirm</button>
+                            </div>
+                        </form>
                         <div class="card-footer text-muted">
-                            
+                            SMK Madya Depok
                         </div>
                     </div>
 
