@@ -8,12 +8,15 @@ include '../../../koneksi.php';
   $nama = $_POST['nama'];
   $kelas= $_POST['kelas'];
   $jam_kehadiran = $_POST['jam_kehadiran'];
+  $jam_pulang = $_POST['status'];
+  $status = $_POST['status'];
+
 
 
 
 //cek dulu jika ada foto produk jalankan coding ini
 if($nisn != "") {
-   $query = "INSERT INTO absen ( nisn, nama, kelas, jam_kehadiran) VALUES ( '$nisn','$nama','$kelas','$jam_kehadiran')";
+   $query = "INSERT INTO absen ( nisn, nama, kelas, jam_kehadiran, jam_pulang,status) VALUES ( '$nisn','$nama','$kelas','$jam_kehadiran','$jam_pulang','$status')";
                   $result = mysqli_query($koneksi, $query);
                   // periska query apakah ada error
                   if(!$result){

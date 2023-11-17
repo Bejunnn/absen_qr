@@ -69,6 +69,8 @@ if (isset($_POST['submit'])) {
     <title>Kelola Data Tamu</title>
 
     <!-- Custom fonts for this template-->
+    <link rel="icon" href="../../assets/img/smkmadya.png">
+
     <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -89,7 +91,8 @@ if (isset($_POST['submit'])) {
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div>
-                    <img src="../assets/img/madep.png" alt="logo" width="45px">
+
+                <img src="../../assets/img/madep.png" alt="logo" width="45px">
                 </div>
 
             </a>
@@ -206,7 +209,8 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $validation ?></h5>
-                        <form method="POST" action="proses/proses_tambah.php" enctype="multipart/form-data">
+                        <form method="POST" action="proses/proses_absen.php" enctype="multipart/form-data">
+
                             <div class="form-group">
                                 <label for="nisn">NISN</label>
                                 <input type="text" name="nisn" id="nisn" required="required" value="<?php echo $index ?>" autocomplete="off" class="form-control" readonly>
@@ -224,6 +228,11 @@ if (isset($_POST['submit'])) {
                                 <input type="text" name="jam_kehadiran" id="jam_kehadiran" required="required" value="<?php echo $capture_date ?> <?php echo $capture_time ?>"" autocomplete="off" class="form-control" readonly>
                             </div>
                             <div class="form-group">
+                                <input type="text" name="status" id="status" required="required" value="masuk" hidden readonly>
+                                <input type="text" name="jam_pulang" id="jam_pulang" required="required" value="" hidden readonly>
+                            </div>
+                            <div class="form-group">
+
                                 <button type="submit" class="btn btn-sm btn-primary" name="tambah">Confirm</button>
                             </div>
                         </form>

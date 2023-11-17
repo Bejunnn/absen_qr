@@ -31,6 +31,7 @@ if (isset($_SESSION['sebagai'])) {
     <title>Kelola Data Tamu</title>
 
     <!-- Custom fonts for this template-->
+    <link rel="icon" href="../../assets/img/smkmadya.png">
     <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -51,7 +52,8 @@ if (isset($_SESSION['sebagai'])) {
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div>
-                    <img src="../assets/img/madep.png" alt="logo" width="45px">
+                    <img src="../../assets/img/madep.png" alt="logo" width="45px">
+
                 </div>
 
             </a>
@@ -186,6 +188,9 @@ if (isset($_SESSION['sebagai'])) {
                                             <th>Nama</th>
                                             <th>Kelas</th>
                                             <th>Jam Kehadiran</th>
+                                            <th>Jam Pulang</th>
+                                            <th>Status</th>
+                                            <th>Aksi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -196,6 +201,27 @@ if (isset($_SESSION['sebagai'])) {
                                                 <td><?= $data['nama']; ?></td>
                                                 <td><?= $data['kelas']; ?></td>
                                                 <td><?= $data['jam_kehadiran']; ?></td>
+
+                                                <td>
+                                                  <?php if($data['status'] == 'pulang') { ?>
+                                                    <?= $data['jam_pulang']; ?>
+                                                  <?php }elseif($data['status'] == 'masuk'){ ?>
+                                                  <a title="Pulang" href="proses/proses_pulang.php?id_absen=<?= $data['id_absen']; ?>" class="btn btn-outline-warning mb-2" onclick="return confirm('Apakah anda yakin tamu sudah pulang ?');"><i class="fas fa-sign-out-alt mr-2"></i>Pulang</a>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td><?php
+                                                  if ($data['status'] == 'masuk') {
+                                                      echo '<div class ="badge badge-success" style="width: 70px;" > <b>Masuk</b> </div>';
+                                                    } else if ($data['status'] == 'pulang') {
+                                                      echo '<div class ="badge badge-danger" style="width: 70px;" > <b>Pulang</b> </div>';
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?id_absen=<?php echo $data['id_absen']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
+                                                </td>
                                             </tr>
                                         <?php
                                         }
