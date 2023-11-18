@@ -168,7 +168,7 @@ if (isset($_SESSION['sebagai'])) {
                     <!-- DataTales Example -->
                     <div class="d-sm-flex justify-content-between align-items-center">
                         <br>
-                        <a href="export.php" class="btn btn-primary btn-icon-split">
+                        <a href="export_excel.php" class="btn btn-primary btn-icon-split">
                             <span class="icon text-white-50">
                                 <i class="fas fa-print"></i>
                             </span>
