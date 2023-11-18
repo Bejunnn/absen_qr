@@ -3,12 +3,12 @@
 include '../../koneksi.php';
 
 // mengecek apakah di url ada nilai GET id
-if (isset($_GET['nisn'])) {
+if (isset($_GET['nis'])) {
   // ambil nilai id dari url dan disimpan dalam variabel $id
-  $nisn = ($_GET["nisn"]);
+  $nis = ($_GET["nis"]);
 
   // menampilkan data dari database yang mempunyai id=$id
-  $query = "SELECT * FROM siswa WHERE nisn='$nisn'";
+  $query = "SELECT * FROM siswa WHERE nis='$nis'";
   $result = mysqli_query($koneksi, $query);
   // jika data gagal diambil maka akan tampil error berikut
   if (!$result) {
@@ -193,10 +193,10 @@ if (isset($_SESSION['sebagai'])) {
                   <form method="POST" action="proses/proses_edit.php" enctype="multipart/form-data">
                     <section class="base">
                     <!-- menampung nilai id  yang akan di edit -->
-                    <input name="nisn" value="<?php echo $data['nisn']; ?>" hidden />
+                    <input name="nis" value="<?php echo $data['nis']; ?>" hidden />
                     <div class="form-group">
-                      <label for="nisn">NISN</label>
-                      <input type="text" value="<?php echo $data['nisn']; ?>" name="nisn" id="nisn" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+                      <label for="nis">nis</label>
+                      <input type="text" value="<?php echo $data['nis']; ?>" name="nis" id="nis" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                     </div>
                     <div class="form-group">
                       <label for="nama">Nama Siswa</label>

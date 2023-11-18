@@ -252,7 +252,7 @@ if (isset($_SESSION['sebagai'])) {
 
         <p style="font-size: 14px;" class="card-text">Capture Time : <span class="badge bg-primary">${time}</span></p>
 
-        <input type="hidden" name="nisn" value="${result}" id="result">
+        <input type="hidden" name="nis" value="${result}" id="result">
 
         <input type="hidden" name="time_val" value="${time}" id="capture_time">
 

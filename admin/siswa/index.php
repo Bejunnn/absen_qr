@@ -181,8 +181,8 @@ if (isset($_SESSION['sebagai'])) {
                                 <div class="card-body">
                                     <form method="POST" action="proses/proses_tambah.php" enctype="multipart/form-data">
                                         <div class="form-group">
-                                            <label for="nisn">NISN</label>
-                                            <input type="text" name="nisn" id="nisn" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+                                            <label for="nis">nis</label>
+                                            <input type="text" name="nis" id="nis" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <label for="nama">Nama</label>
@@ -212,7 +212,7 @@ if (isset($_SESSION['sebagai'])) {
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>NISN</th>
+                                                <th>nis</th>
                                                 <th>Nama</th>
                                                 <th>Kelas</th>
                                                 <th>Aksi</th>
@@ -226,12 +226,12 @@ if (isset($_SESSION['sebagai'])) {
                                                 <tr>
 
                                                     <td><?= $no++ ?></td>
-                                                    <td><?= $data['nisn']; ?></td>
+                                                    <td><?= $data['nis']; ?></td>
                                                     <td><?= $data['nama']; ?></td>
                                                     <td><?= $data['kelas']; ?></td>
                                                     <td>
-                                                        <a title="edit" class="btn btn-primary" href="edit.php?nisn=<?php echo $data['nisn']; ?>"><i class="fas fa-edit"></i></a>
-                                                        <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?nisn=<?php echo $data['nisn']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
+                                                        <a title="edit" class="btn btn-primary" href="edit.php?nis=<?php echo $data['nis']; ?>"><i class="fas fa-edit"></i></a>
+                                                        <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?nis=<?php echo $data['nis']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
                                                     </td>
                                                 </tr>
                                             <?php

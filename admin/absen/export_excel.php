@@ -40,7 +40,7 @@ if (isset($_SESSION['sebagai'])) {
             <table class="table table-bordered" id="mauexport" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>NISN</th>
+                        <th>nis</th>
                         <th>Nama</th>
                         <th>Kelas</th>
                         <th>Jam Kehadiran</th>
@@ -51,7 +51,7 @@ if (isset($_SESSION['sebagai'])) {
                     <?php foreach ($rows as $data) {
                     ?>
                         <tr>
-                            <td><?= $data['nisn']; ?></td>
+                            <td><?= $data['nis']; ?></td>
                             <td><?= $data['nama']; ?></td>
                             <td><?= $data['kelas']; ?></td>
                             <td><?= $data['jam_kehadiran']; ?></td>

@@ -1,15 +1,15 @@
 <?php
 include "../../koneksi.php"; // Include your database connection file.
 
-// Check if the 'nisn' parameter exists in the POST request.
-if(isset($_POST['nisn'])) {
-    $nisn = $_POST['nisn'];
+// Check if the 'nis' parameter exists in the POST request.
+if(isset($_POST['nis'])) {
+    $nis = $_POST['nis'];
 
     // Use prepared statements to prevent SQL injection.
-    $stmt = mysqli_prepare($koneksi, "SELECT * FROM siswa WHERE nisn = ?");
+    $stmt = mysqli_prepare($koneksi, "SELECT * FROM siswa WHERE nis = ?");
     
     if ($stmt) {
-        mysqli_stmt_bind_param($stmt, 's', $nisn); // Assuming 'nisn' is a string.
+        mysqli_stmt_bind_param($stmt, 's', $nis); // Assuming 'nis' is a string.
 
         // Execute the prepared statement.
         if (mysqli_stmt_execute($stmt)) {
@@ -22,7 +22,7 @@ if(isset($_POST['nisn'])) {
                 if ($data !== null) {
                     echo json_encode($data);
                 } else {
-                    echo json_encode(array('error' => 'No data found for the given nisn.'));
+                    echo json_encode(array('error' => 'No data found for the given nis.'));
                 }
             } else {
                 echo json_encode(array('error' => 'Error fetching data.'));
@@ -36,7 +36,7 @@ if(isset($_POST['nisn'])) {
         echo json_encode(array('error' => 'Error preparing the query.'));
     }
 } else {
-    echo json_encode(array('error' => 'No "nisn" parameter received in POST.'));
+    echo json_encode(array('error' => 'No "nis" parameter received in POST.'));
 }
 
 // Close the database connection.

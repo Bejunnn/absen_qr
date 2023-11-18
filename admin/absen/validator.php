@@ -1,6 +1,6 @@
 <?php
 include('../../koneksi.php');
-$result = mysqli_query($koneksi, "SELECT * FROM absen");
+$result = mysqli_query($koneksi, "SELECT * FROM masuk");
 $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
@@ -18,7 +18,7 @@ if (isset($_SESSION['sebagai'])) {
 }
 
 if (isset($_POST['submit'])) {
-    $index = $_POST['nisn'];
+    $index = $_POST['nis'];
 
     $capture_time = $_POST['time_val'];
 
@@ -30,7 +30,7 @@ if (isset($_POST['submit'])) {
 
     $faculty = "school-of-ict";
 
-    $sql = "SELECT * FROM siswa WHERE nisn = '$index';";
+    $sql = "SELECT * FROM siswa WHERE nis = '$index';";
 
     $stmt = $koneksi->prepare($sql);
 
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
     if ($stmt->num_rows() > 0) {
         $validation = "User Validated Successfully";
 
-        $data_select = "SELECT nama, kelas FROM siswa WHERE nisn = '$index';";
+        $data_select = "SELECT nama, kelas FROM siswa WHERE nis = '$index';";
 
         $stmt = $koneksi->prepare($data_select);
 
@@ -212,8 +212,8 @@ if (isset($_POST['submit'])) {
                         <form method="POST" action="proses/proses_absen.php" enctype="multipart/form-data">
 
                             <div class="form-group">
-                                <label for="nisn">NISN</label>
-                                <input type="text" name="nisn" id="nisn" required="required" value="<?php echo $index ?>" autocomplete="off" class="form-control" readonly>
+                                <label for="nis">nis</label>
+                                <input type="text" name="nis" id="nis" required="required" value="<?php echo $index ?>" autocomplete="off" class="form-control" readonly>
                             </div>
                             <div class="form-group">
                                 <label for="nama">Nama</label>
@@ -224,15 +224,10 @@ if (isset($_POST['submit'])) {
                                 <input type="text" name="kelas" id="kelas" required="required" value="<?php echo $faculty ?>" autocomplete="off" class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="jam_kehadiran">Capture Date</label>
-                                <input type="text" name="jam_kehadiran" id="jam_kehadiran" required="required" value="<?php echo $capture_date ?> <?php echo $capture_time ?>"" autocomplete="off" class="form-control" readonly>
+                                <label for="jam_masuk">Capture Date</label>
+                                <input type="text" name="jam_masuk" id="jam_masuk" required="required" value="<?php echo $capture_date ?> <?php echo $capture_time ?>"" autocomplete="off" class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <input type="text" name="status" id="status" required="required" value="masuk" hidden readonly>
-                                <input type="text" name="jam_pulang" id="jam_pulang" required="required" value="" hidden readonly>
-                            </div>
-                            <div class="form-group">
-
                                 <button type="submit" class="btn btn-sm btn-primary" name="tambah">Confirm</button>
                             </div>
                         </form>

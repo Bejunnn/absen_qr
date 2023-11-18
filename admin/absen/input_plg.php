@@ -1,5 +1,11 @@
 <?php
 include('../../koneksi.php');
+$result = mysqli_query($koneksi, "SELECT * FROM siswa");
+$rows = [];
+while ($row = mysqli_fetch_assoc($result)) {
+    $rows[] = $row;
+}
+
 session_start();
 if (!isset($_SESSION['sebagai'])) {
     header("Location: ../index.php");
@@ -22,16 +28,44 @@ if (isset($_SESSION['sebagai'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kelola Data Tamu</title>
+    <title>Kelola Data Siswa</title>
 
     <!-- Custom fonts for this template-->
-    <link rel="icon" href="../../assets/img/smkmadya.png">
     <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        main {
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            border-radius: 20px;
+        }
+
+        #reader {
+            width: 600px;
+
+            border-radius: 30px;
+        }
+
+        #result {
+
+            text-align: center;
+
+            font-size: 1.5rem;
+        }
+    </style>
 
 </head>
 
@@ -47,7 +81,6 @@ if (isset($_SESSION['sebagai'])) {
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div>
                     <img src="../../assets/img/madep.png" alt="logo" width="45px">
-
                 </div>
 
             </a>
@@ -64,6 +97,8 @@ if (isset($_SESSION['sebagai'])) {
 
             <!-- Divider -->
             <hr class="sidebar-divider">
+
+
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -86,17 +121,16 @@ if (isset($_SESSION['sebagai'])) {
                 </a>
                 <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item active" href="index.php">History</a>
-                        <a class="collapse-item" href="input.php">Absen</a>
-                        <a class="collapse-item" href="input_plg.php">Pulang</a>
+                        <a class="collapse-item" href="index.php">History</a>
+                        <a class="collapse-item active" href="input.php">Absen</a>
                     </div>
                 </div>
             </li>
 
 
+
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
-
 
 
             <li class="nav-item">
@@ -159,88 +193,119 @@ if (isset($_SESSION['sebagai'])) {
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
                     </div>
+                    <main>
+                        <div id="reader" class="rounded"></div>
 
-                    <!-- DataTales Example -->
-                    <div class="d-sm-flex justify-content-between align-items-center">
-                        <br>
-                        <a href="export_excel.php" class="btn btn-primary btn-icon-split">
-                            <span class="icon text-white-50">
-                                <i class="fas fa-print"></i>
-                            </span>
-                            <span class="text">Cetak Laporan</span>
-                        </a>
-                    </div><br>
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Hitory Absensi</h6>
-                        </div>
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                    <thead>
-                                        <tr>
-                                            <th>nis</th>
-                                            <th>Nama</th>
-                                            <th>Kelas</th>
-                                            <th>Jam Kehadiran</th>
-                                            <th>Jam Pulang</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php 
-                                        $rows = mysqli_query($koneksi, "SELECT * FROM masuk
-                                        INNER JOIN pulang ON masuk.nis = pulang.nis");
-      ;
-                                        foreach ($rows as $data):
+                        <div id="result"></div>
 
-                                        ?>
-                                            <tr>
-                                                <td><?= $data['nis']; ?></td>
-                                                <td><?= $data['nama']; ?></td>
-                                                <td><?= $data['kelas']; ?></td>
-                                                <td><?= $data['jam_masuk']; ?></td>
-                                                <td><?= $data['jam_pulang']; ?></td>
-                                            </tr>
-                                        <?php
-                                        endforeach;
-                                        ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    </main>
 
-                    </div>
-                    <!-- End of Main Content -->
+
 
 
                 </div>
-                <!-- End of Page Wrapper -->
-
-                <!-- Scroll to Top Button-->
-                <a class="scroll-to-top rounded" href="#page-top">
-                    <i class="fas fa-angle-up"></i>
-                </a>
-                <!-- Bootstrap core JavaScript-->
-                <script src="../../assets/vendor/jquery/jquery.min.js"></script>
-                <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-                <!-- Core plugin JavaScript-->
-                <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-                <!-- Custom scripts for all pages-->
-                <script src="../../assets/js/sb-admin-2.min.js"></script>
-
-                <!-- Page level plugins -->
-                <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
-
-                <!-- Page level custom scripts -->
-                <script src="../../assets/js/demo/chart-area-demo.js"></script>
-                <script src="../../assets/js/demo/chart-pie-demo.js"></script>
+                <!-- End of Main Content -->
 
 
-                <!-- Page level custom scripts -->
-                <script src="../../assets/js/demo/datatables-demo.js"></script>
+            </div>
+            <!-- End of Page Wrapper -->
 
+            <!-- Scroll to Top Button-->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+            <script>
+                const scanner = new Html5QrcodeScanner('reader', {
+                    // Scanner will be initialized in DOM inside element with id of 'reader'
+                    qrbox: {
+                        width: 250,
+                        height: 250,
+                    }, // Sets dimensions of scanning box (set relative to reader element width)
+                    fps: 20, // Frames per second to attempt a scan
+                });
+
+
+                scanner.render(success, error);
+                // Starts scanner
+
+                function success(result) {
+
+                    let today = new Date().toISOString().slice(0, 10)
+
+                    const date_obj = new Date();
+
+                    time = new Date().toLocaleTimeString();
+
+                    document.getElementById('result').innerHTML = `
+
+        <div class="card" style="width: 18rem; onload="console_log(${result});">
+
+        <img src="../../assets/images/barcode-scan.gif" class="card-img-top" alt="...">
+
+        <div class="card-body">
+
+        <form action="validator_plg.php" method="post">
+
+        <p style="font-size: 14px;" class="card-text">Bar Code Read Successfully : <span class="badge bg-primary">${result}</span></p>
+
+        <p style="font-size: 14px;" class="card-text">Date : <span class="badge bg-primary">${today}</span></p>
+
+        <p style="font-size: 14px;" class="card-text">Capture Time : <span class="badge bg-primary">${time}</span></p>
+
+        <input type="hidden" name="nis" value="${result}" id="result">
+
+        <input type="hidden" name="time_val" value="${time}" id="capture_time">
+
+        <input type="hidden" name="date_val" value="${today}" id="capture_date">
+
+        <button type="submit" name="submit" class="btn btn-outline-primary btn-sm">Validation</button>
+
+        </form>
+
+        </div>
+
+        </div>
+        `;
+
+                    // Prints result as a link inside result element
+
+                    scanner.clear();
+                    // Clears scanning instance
+
+                    document.getElementById('reader').remove();
+                    // Removes reader element from DOM since no longer needed
+
+                }
+
+                function error(err) {
+                    console.error(err);
+                    // Prints any errors to the console
+                }
+
+                function console_log(result) {
+                    console.log(result);
+                }
+            </script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="../../assets/vendor/jquery/jquery.min.js"></script>
+            <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+            <!-- Core plugin JavaScript-->
+            <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+            <!-- Custom scripts for all pages-->
+            <script src="../../assets/js/sb-admin-2.min.js"></script>
+
+            <!-- Page level plugins -->
+            <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
+
+            <!-- Page level custom scripts -->
+            <script src="../../assets/js/demo/chart-area-demo.js"></script>
+            <script src="../../assets/js/demo/chart-pie-demo.js"></script>
+
+
+            <!-- Page level custom scripts -->
+            <script src="../../assets/js/demo/datatables-demo.js"></script>
 
 </body>
 

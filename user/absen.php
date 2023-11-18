@@ -226,11 +226,11 @@ if (isset($_SESSION['sebagai'])) {
                                 <div class="container">
                                     <div class="header">
                                         <h1>QR Code Generator</h1>
-                                        <p>Select NISN to Generate a QR Code</p>
+                                        <p>Select nis to Generate a QR Code</p>
                                     </div>
                                     <div class="input-form">
                                         <!-- Corrected class name here -->
-                                        <select class="qr-input" name="nisn" id="nisn" onchange="detail()">
+                                        <select class="qr-input" name="nis" id="nis" onchange="detail()">
                                             <option value="">Pilih Nomor Induk Siswa Nasional</option>
                                             <?php
                                             include "koneksi.php";
@@ -238,7 +238,7 @@ if (isset($_SESSION['sebagai'])) {
                                             $query = mysqli_query($koneksi, "select * from siswa");
                                             while ($data = mysqli_fetch_array($query)) {
                                             ?>
-                                                <option value="<?php echo $data['nisn']; ?>"><?php echo $data['nisn']; ?></option>
+                                                <option value="<?php echo $data['nis']; ?>"><?php echo $data['nis']; ?></option>
                                             <?php
                                             }
                                             ?>
@@ -309,12 +309,12 @@ if (isset($_SESSION['sebagai'])) {
         </script>
         <script>
             function detail() {
-                var nisn = $("#nisn").val();
+                var nis = $("#nis").val();
                 $.ajax({
                     url: "data.php",
                     method: "POST",
                     data: {
-                        nisn: nisn
+                        nis: nis
                     },
                     dataType: "json",
                     success: function(data) {}

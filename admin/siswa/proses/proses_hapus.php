@@ -1,11 +1,11 @@
 <?php
 include '../../../koneksi.php';
-$nisn = $_GET['nisn'];
+$nis = $_GET['nis'];
 
 // Properly escape the value to prevent SQL injection
-$nisn = mysqli_real_escape_string($koneksi, $nisn);
+$nis = mysqli_real_escape_string($koneksi, $nis);
 
-$result = mysqli_query($koneksi, "DELETE FROM siswa WHERE nisn = '$nisn'");
+$result = mysqli_query($koneksi, "DELETE FROM siswa WHERE nis = '$nis'");
 $cek = mysqli_affected_rows($koneksi);
 
 if ($cek > 0) {

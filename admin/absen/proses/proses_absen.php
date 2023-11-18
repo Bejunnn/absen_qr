@@ -4,19 +4,16 @@ include '../../../koneksi.php';
 
 	// membuat variabel untuk menampung data dari form
 
-  $nisn = $_POST['nisn'];
+  $nis = $_POST['nis'];
   $nama = $_POST['nama'];
   $kelas= $_POST['kelas'];
-  $jam_kehadiran = $_POST['jam_kehadiran'];
-  $jam_pulang = $_POST['status'];
-  $status = $_POST['status'];
-
+  $jam_masuk = $_POST['jam_masuk'];
 
 
 
 //cek dulu jika ada foto produk jalankan coding ini
-if($nisn != "") {
-   $query = "INSERT INTO absen ( nisn, nama, kelas, jam_kehadiran, jam_pulang,status) VALUES ( '$nisn','$nama','$kelas','$jam_kehadiran','$jam_pulang','$status')";
+if($nis != "") {
+   $query = "INSERT INTO masuk ( nis, nama, kelas, jam_masuk) VALUES ( '$nis','$nama','$kelas','$jam_masuk')";
                   $result = mysqli_query($koneksi, $query);
                   // periska query apakah ada error
                   if(!$result){
@@ -25,7 +22,7 @@ if($nisn != "") {
                   } else {
                     //tampil alert dan akan redirect ke halaman index.php
                     //silahkan ganti index.php sesuai halaman yang akan dituju
-                    echo "<script>alert('Anda Berhasil Absen.');window.location='../index.php';</script>";
+                    echo "<script>alert('Anda Berhasil Absen.');window.location='../in.php';</script>";
                   }
 }
 
