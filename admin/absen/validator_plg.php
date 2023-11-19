@@ -132,7 +132,8 @@ if (isset($_POST['submit'])) {
                 <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="index.php">History</a>
-                        <a class="collapse-item active" href="input.php">Absen</a>
+                        <a class="collapse-item" href="input.php">Absen</a>
+                        <a class="collapse-item active" href="input_plg.php">Pulang</a>
                     </div>
                 </div>
             </li>

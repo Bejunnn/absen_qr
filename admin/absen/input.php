@@ -123,6 +123,7 @@ if (isset($_SESSION['sebagai'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="index.php">History</a>
                         <a class="collapse-item active" href="input.php">Absen</a>
+                        <a class="collapse-item" href="input_plg.php">Pulang</a>
                     </div>
                 </div>
             </li>
