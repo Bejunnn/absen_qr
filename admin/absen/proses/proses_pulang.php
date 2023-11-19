@@ -1,35 +1,32 @@
 <?php
+// memanggil file koneksi.php untuk melakukan koneksi database
 include '../../../koneksi.php';
 
+// membuat variabel untuk menampung data dari form
 $nis = $_POST['nis'];
 $jam_pulang = $_POST['jam_pulang'];
 
-// Validasi input
-if (empty($nis) || empty($jam_pulang)) {
-    echo "<script>alert('Isi semua kolom.');window.location='../input_plg.php';</script>";
-    exit();
-}
+// Mendapatkan tanggal saat ini
+$tanggal_sekarang = date('Y-m-d');
 
-// Cek data
-$cek_data = mysqli_query($koneksi, "SELECT * FROM pulang WHERE nis = '$nis'") or die(mysqli_error($koneksi));
-if (mysqli_num_rows($cek_data) > 0) {
-    echo "<script>alert('Anda sudah pulang.');window.location='../index.php';</script>";
+// Mengecek apakah sudah ada data untuk NIS tersebut pada tanggal sekarang
+$cek_query = "SELECT * FROM pulang WHERE nis = '$nis' AND DATE_FORMAT(tanggal, '%Y-%m-%d') = '$tanggal_sekarang'";
+$cek_result = mysqli_query($koneksi, $cek_query);
+
+if (mysqli_num_rows($cek_result) > 0) {
+    // Jika sudah ada data, tampilkan pesan kesalahan
+    echo "<script>alert('Anda sudah melakukan absen pulang hari ini.');window.location='../index.php';</script>";
 } else {
-    // Query menggunakan prepared statement
-    $query = "INSERT INTO pulang (nis, jam_pulang) VALUES (?, ?)";
-    $stmt = mysqli_prepare($koneksi, $query);
+    // Jika belum ada data, jalankan query INSERT
+    $query = "INSERT INTO pulang (nis, jam_pulang, tanggal) VALUES ('$nis','$jam_pulang', '$tanggal_sekarang')";
+    $result = mysqli_query($koneksi, $query);
 
-    if ($stmt) {
-        mysqli_stmt_bind_param($stmt, "ss", $nis, $jam_pulang);
-        $result = mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-
-        if ($result) {
-            echo "<script>alert('Anda Berhasil Pulang.');window.location='../index.php';</script>";
-        } else {
-            die("Query gagal dijalankan: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
-        }
+    // periksa query apakah ada error
+    if (!$result) {
+        die("Query gagal dijalankan: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
     } else {
-        die("Prepared statement gagal: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
+        // tampilkan alert dan redirect ke halaman index.php
+        echo "<script>alert('Anda Berhasil Absen.');window.location='../index.php';</script>";
     }
 }
+?>
