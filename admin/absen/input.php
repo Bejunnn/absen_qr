@@ -74,7 +74,7 @@ if (!isset($_SESSION['username'])) {
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
                 <div>
                     <img src="../../assets/img/madep.png" alt="logo" width="45px">
                 </div>
@@ -105,7 +105,7 @@ if (!isset($_SESSION['username'])) {
                 <div id="booking" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="../siswa/index.php">Siswa</a>
-                        <a class="collapse-item" href="../akun/index.php">Akun</a>
+                        <a class="collapse-item" href="../akun/index.php">Admin</a>
                     </div>
                 </div>
             </li>
@@ -117,9 +117,21 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="index.php">History</a>
                         <a class="collapse-item active" href="input.php">Absen</a>
                         <a class="collapse-item" href="input_plg.php">Pulang</a>
+                    </div>
+                </div>
+            </li>
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#data2" aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Data Absensi</span>
+                </a>
+                <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="../absen/data_masuk.php">Data Absen Masuk</a>
+                        <a class="collapse-item" href="../absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
                 </div>
             </li>

@@ -1,11 +1,5 @@
 <?php
 include('../../koneksi.php');
-$result = mysqli_query($koneksi, "SELECT * FROM siswa");
-$rows = [];
-while ($row = mysqli_fetch_assoc($result)) {
-    $rows[] = $row;
-}
-
 session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: ../index.php");
@@ -23,7 +17,7 @@ if (!isset($_SESSION['username'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kelola Data Siswa</title>
+    <title>Kelola Data Tamu</title>
 
     <!-- Custom fonts for this template-->
     <link rel="icon" href="../../assets/img/smkmadya.png">
@@ -33,35 +27,6 @@ if (!isset($_SESSION['username'])) {
     <!-- Custom styles for this template-->
     <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="../../assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
-        main {
-            display: flex;
-
-            justify-content: center;
-
-            align-items: center;
-
-            border-radius: 20px;
-        }
-
-        #reader {
-            width: 600px;
-
-            border-radius: 30px;
-        }
-
-        #result {
-
-            text-align: center;
-
-            font-size: 1.5rem;
-        }
-    </style>
 
 </head>
 
@@ -77,6 +42,7 @@ if (!isset($_SESSION['username'])) {
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
                 <div>
                     <img src="../../assets/img/madep.png" alt="logo" width="45px">
+
                 </div>
 
             </a>
@@ -94,8 +60,6 @@ if (!isset($_SESSION['username'])) {
             <!-- Divider -->
             <hr class="sidebar-divider">
 
-
-
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#booking" aria-expanded="true" aria-controls="collapseTwo">
@@ -110,36 +74,36 @@ if (!isset($_SESSION['username'])) {
                 </div>
             </li>
             <hr class="sidebar-divider">
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#data" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-receipt"></i>
                     <span>Absensi</span>
                 </a>
-                <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="data" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item " href="input.php">Absen</a>
-                        <a class="collapse-item active" href="input_plg.php">Pulang</a>
+                        <a class="collapse-item" href="input.php">Absen</a>
+                        <a class="collapse-item" href="input_plg.php">Pulang</a>
                     </div>
                 </div>
             </li>
             <hr class="sidebar-divider">
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#data2" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-table"></i>
                     <span>Data Absensi</span>
                 </a>
-                <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                <div id="data2" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="../absen/data_masuk.php">Data Absen Masuk</a>
-                        <a class="collapse-item" href="../absen/data_pulang.php">Data Absen Pulang</a>
+                        <a class="collapse-item active" href="../absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
                 </div>
             </li>
 
 
-
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
+
 
 
             <li class="nav-item">
@@ -179,7 +143,7 @@ if (!isset($_SESSION['username'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['username']; ?></span>
-                                <img class="img-profile rounded-circle" src="../assets/img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="../../assets/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -202,119 +166,86 @@ if (!isset($_SESSION['username'])) {
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
 
                     </div>
-                    <main>
-                        <div id="reader" class="rounded"></div>
 
-                        <div id="result"></div>
+                    <!-- DataTales Example -->
+                    <div class="d-sm-flex justify-content-between align-items-center">
+                        <br>
+                        <a href="proses/proses_cetak_pulang.php" class="btn btn-primary btn-icon-split">
+                            <span class="icon text-white-50">
+                                <i class="fas fa-print"></i>
+                            </span>
+                            <span class="text">Cetak Data</span>
+                        </a>
+                    </div><br>
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Hitory Absensi</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>NIS</th>
+                                            <th>Nama</th>
+                                            <th>Kelas</th>
+                                            <th>Jam Pulang</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php 
+                                        $rows = mysqli_query($koneksi, "SELECT * FROM masuk
+                                        INNER JOIN pulang ON masuk.nis = pulang.nis");
+      ;
+                                        foreach ($rows as $data):
 
-                    </main>
+                                        ?>
+                                            <tr>
+                                                <td><?= $data['nis']; ?></td>
+                                                <td><?= $data['nama']; ?></td>
+                                                <td><?= $data['kelas']; ?></td>
+                                                <td><?= $data['jam_pulang']; ?></td>
+                                            </tr>
+                                        <?php
+                                        endforeach;
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
 
-
+                    </div>
+                    <!-- End of Main Content -->
 
 
                 </div>
-                <!-- End of Main Content -->
+                <!-- End of Page Wrapper -->
+
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+                <!-- Bootstrap core JavaScript-->
+                <script src="../../assets/vendor/jquery/jquery.min.js"></script>
+                <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- Core plugin JavaScript-->
+                <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <!-- Custom scripts for all pages-->
+                <script src="../../assets/js/sb-admin-2.min.js"></script>
+
+                <!-- Page level plugins -->
+                <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="../../assets/js/demo/chart-area-demo.js"></script>
+                <script src="../../assets/js/demo/chart-pie-demo.js"></script>
 
 
-            </div>
-            <!-- End of Page Wrapper -->
+                <!-- Page level custom scripts -->
+                <script src="../../assets/js/demo/datatables-demo.js"></script>
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <i class="fas fa-angle-up"></i>
-            </a>
-            <script>
-                const scanner = new Html5QrcodeScanner('reader', {
-                    // Scanner will be initialized in DOM inside element with id of 'reader'
-                    qrbox: {
-                        width: 250,
-                        height: 250,
-                    }, // Sets dimensions of scanning box (set relative to reader element width)
-                    fps: 20, // Frames per second to attempt a scan
-                });
-
-
-                scanner.render(success, error);
-                // Starts scanner
-
-                function success(result) {
-
-                    let today = new Date().toISOString().slice(0, 10)
-
-                    const date_obj = new Date();
-
-                    time = new Date().toLocaleTimeString();
-
-                    document.getElementById('result').innerHTML = `
-
-        <div class="card" style="width: 18rem; onload="console_log(${result});">
-
-        <img src="../../assets/images/barcode-scan.gif" class="card-img-top" alt="...">
-
-        <div class="card-body">
-
-        <form action="validator_plg.php" method="post">
-
-        <p style="font-size: 14px;" class="card-text">Bar Code Read Successfully : <span class="badge bg-primary">${result}</span></p>
-
-        <p style="font-size: 14px;" class="card-text">Date : <span class="badge bg-primary">${today}</span></p>
-
-        <p style="font-size: 14px;" class="card-text">Capture Time : <span class="badge bg-primary">${time}</span></p>
-
-        <input type="hidden" name="nis" value="${result}" id="result">
-
-        <input type="hidden" name="time_val" value="${time}" id="capture_time">
-
-        <input type="hidden" name="date_val" value="${today}" id="capture_date">
-
-        <button type="submit" name="submit" class="btn btn-outline-primary btn-sm">Validation</button>
-
-        </form>
-
-        </div>
-
-        </div>
-        `;
-
-                    // Prints result as a link inside result element
-
-                    scanner.clear();
-                    // Clears scanning instance
-
-                    document.getElementById('reader').remove();
-                    // Removes reader element from DOM since no longer needed
-
-                }
-
-                function error(err) {
-                    console.error(err);
-                    // Prints any errors to the console
-                }
-
-                function console_log(result) {
-                    console.log(result);
-                }
-            </script>
-            <!-- Bootstrap core JavaScript-->
-            <script src="../../assets/vendor/jquery/jquery.min.js"></script>
-            <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Core plugin JavaScript-->
-            <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-            <!-- Custom scripts for all pages-->
-            <script src="../../assets/js/sb-admin-2.min.js"></script>
-
-            <!-- Page level plugins -->
-            <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
-
-            <!-- Page level custom scripts -->
-            <script src="../../assets/js/demo/chart-area-demo.js"></script>
-            <script src="../../assets/js/demo/chart-pie-demo.js"></script>
-
-
-            <!-- Page level custom scripts -->
-            <script src="../../assets/js/demo/datatables-demo.js"></script>
 
 </body>
 

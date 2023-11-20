@@ -34,12 +34,10 @@ $koneksi->close();
 <body>
 <!-- partial:index.partial.html -->
 <form method="post" class="login">
-  <input type="text" name="username" id="username" placeholder="username" >
-  <input type="text" name="password" id="password" placeholder="password">
+  <input type="text" name="username" id="username" placeholder="Username" >
+  <input type="text" name="password" id="password" placeholder="Password">
   <button type="submit" class="btn-login" name="btn-login">Login</button>
 </form>
-
-<a href="https://codepen.io/davinci/" target="_blank">check my other pens</a>
 <!-- partial -->
   
 </body>

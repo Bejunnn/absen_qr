@@ -32,18 +32,22 @@ $koneksi->close();
   <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css">
 
 </head>
+<style>
+  .text-2{
+    color: lightslategray;
+    font-weight: bold;
+  }
+</style>
+
 <body>
 <!-- partial:index.partial.html -->
 <form method="post" class="login">
-  <input type="text" name="nis" id="nis" placeholder="nis" >
-  <input type="text" name="nama" id="nama" placeholder="nama">
+  <input type="text" name="nis" id="nis" placeholder="NIS" >
+  <input type="text" name="nama" id="nama" placeholder="Nama">
   <button type="submit" class="btn-login" name="btn-login">Login</button>
-  <a href="admin.php">Go to Admin Page</a>
+  <a href="admin.php" class="text-2">Go to Admin Page</a>
 
 </form>
-
-
-<a href="https://codepen.io/davinci/" target="_blank">check my other pens</a>
 <!-- partial -->
   
 </body>

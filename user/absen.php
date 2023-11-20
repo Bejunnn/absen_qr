@@ -1,4 +1,3 @@
-
 <?php
 include "../koneksi.php";
 $query = "SELECT * FROM siswa";
@@ -234,8 +233,6 @@ if (!isset($_SESSION['nama'])) {
                                         <input type="text" class="qr-input" value="<?php echo $data['nis']; ?>" readonly>
                                         <button class="generate-btn">Generate QR Code</button>
                                     </div>
-
-
                                     <div class="qr-code">
                                         <img class="qr-image">
                                     </div>
