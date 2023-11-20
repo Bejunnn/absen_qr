@@ -5,16 +5,10 @@ $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
 }
-
 session_start();
-if (!isset($_SESSION['sebagai'])) {
+if (!isset($_SESSION['username'])) {
     header("Location: ../index.php");
-}
-
-if (isset($_SESSION['sebagai'])) {
-    if ($_SESSION['sebagai'] == 'user') {
-        header('Location: ./user.php');
-    }
+    exit();
 }
 ?>
 <html>

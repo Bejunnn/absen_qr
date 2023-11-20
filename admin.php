@@ -1,23 +1,22 @@
 <?php
 session_start();
 include "koneksi.php";
-if (isset($_POST['nis']) && isset($_POST['nama'])) {
+if (isset($_POST['username']) && isset($_POST['password'])) {
   // Get user input
-  $nis = $_POST['nis'];
-  $nama = $_POST['nama'];
+  $username = $_POST['username'];
+  $password = $_POST['password'];
 
 // Query to check user credentials
-$query = "SELECT * FROM siswa WHERE nis='$nis' AND nama='$nama'";
+$query = "SELECT * FROM admin WHERE username='$username' AND password='$password'";
 $result = $koneksi->query($query);
 
 if ($result->num_rows == 1) {
     // Login successful
-    $_SESSION['nama'] = $nama;
-    $_SESSION['nis'] = $nis;
-    header("Location: user/index.php"); // Redirect to dashboard or any other page
+    $_SESSION['username'] = $username;
+    header("Location: admin/index.php"); // Redirect to dashboard or any other page
 } else {
     // Login failed
-    echo "<script>alert('nisn atau nama Anda salah. Silahkan coba lagi!')</script>";
+    echo "Invalid username or password";
 }
 }
 $koneksi->close();
@@ -26,7 +25,7 @@ $koneksi->close();
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-<link rel="icon" href="../assets/img/smkmadya.png">
+  <link rel="icon" href="../assets/img/smkmadya.png">
   <meta charset="UTF-8">
   <title>Login</title>
   <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css">
@@ -35,13 +34,10 @@ $koneksi->close();
 <body>
 <!-- partial:index.partial.html -->
 <form method="post" class="login">
-  <input type="text" name="nis" id="nis" placeholder="nis" >
-  <input type="text" name="nama" id="nama" placeholder="nama">
+  <input type="text" name="username" id="username" placeholder="username" >
+  <input type="text" name="password" id="password" placeholder="password">
   <button type="submit" class="btn-login" name="btn-login">Login</button>
-  <a href="admin.php">Go to Admin Page</a>
-
 </form>
-
 
 <a href="https://codepen.io/davinci/" target="_blank">check my other pens</a>
 <!-- partial -->

@@ -1,14 +1,10 @@
+
 <?php
 session_start();
-if (!isset($_SESSION['sebagai'])) {
+
+if (!isset($_SESSION['nama'])) {
     header("Location: ../index.php");
-}
-
-
-if (isset($_SESSION['sebagai'])) {
-    if ($_SESSION['sebagai'] == 'admin') {
-        header('Location: admin.php');
-    }
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -25,6 +21,7 @@ if (isset($_SESSION['sebagai'])) {
     <title>Homepage</title>
 
     <!-- Custom fonts for this template-->
+    <link rel="icon" href="../assets/img/smkmadya.png">
     <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -160,7 +157,7 @@ if (isset($_SESSION['sebagai'])) {
                             </div>
                             <div class="card-body">
                                 <div>
-                                    Selamat datang <?= $_SESSION['nama']; ?>, anda login sebagai <?= $_SESSION['sebagai']; ?> di aplikasi absensi.
+                                    Selamat datang <?= $_SESSION['nama']; ?> di aplikasi absensi.
                                 </div>
                             </div>
                         </div>
@@ -199,24 +196,6 @@ if (isset($_SESSION['sebagai'])) {
         <!-- Page level custom scripts -->
         <script src="../assets/js/demo/chart-area-demo.js"></script>
         <script src="../assets/js/demo/chart-pie-demo.js"></script>
-        <script>
-            var container = document.querySelector(".container");
-            var generateBtn = document.querySelector(".generate-btn");
-            // Corrected class name here
-            var qrInput = document.querySelector(".qr-input");
-            var qrImg = document.querySelector(".qr-image");
-
-            generateBtn.onclick = function() {
-                if (qrInput.value.length > 0) {
-                    generateBtn.innerText = "Generating QR Code...";
-                    qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=" + qrInput.value;
-                    qrImg.onload = function() {
-                        container.classList.add("active");
-                        generateBtn.innerText = "Generate QR Code";
-                    }
-                }
-            }
-        </script>
 
 </body>
 

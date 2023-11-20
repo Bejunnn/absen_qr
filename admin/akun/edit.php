@@ -8,7 +8,7 @@ if (isset($_GET['id'])) {
   $id = ($_GET["id"]);
 
   // menampilkan data dari database yang mempunyai id=$id
-  $query = "SELECT * FROM login WHERE id='$id'";
+  $query = "SELECT * FROM admin WHERE id='$id'";
   $result = mysqli_query($koneksi, $query);
   // jika data gagal diambil maka akan tampil error berikut
   if (!$result) {
@@ -26,14 +26,9 @@ if (isset($_GET['id'])) {
   echo "<script>alert('Masukkan data id.');window.location='index.php';</script>";
 }
 session_start();
-if (!isset($_SESSION['sebagai'])) {
+if (!isset($_SESSION['username'])) {
   header("Location: ../index.php");
-}
-
-if (isset($_SESSION['sebagai'])) {
-  if ($_SESSION['sebagai'] == 'user') {
-    header('Location: ../user/index.php');
-  }
+  exit();
 }
 ?>
 <!DOCTYPE html>
@@ -50,6 +45,7 @@ if (isset($_SESSION['sebagai'])) {
   <title>Kelola Data Mobil</title>
 
   <!-- Custom fonts for this template-->
+  <link rel="icon" href="../../assets/img/smkmadya.png">
   <link href="../../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -70,7 +66,7 @@ if (isset($_SESSION['sebagai'])) {
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div>
-          <img src="../../assets/img/mitra.png" alt="logo" width="45px">
+          <img src="../../assets/img/madep.png" alt="logo" width="45px">
         </div>
 
       </a>
@@ -113,6 +109,7 @@ if (isset($_SESSION['sebagai'])) {
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="../absen/index.php">History</a>
             <a class="collapse-item" href="../absen/input.php">Absen</a>
+            <a class="collapse-item" href="../absen/input_plg.php">Pulang</a>
           </div>
         </div>
       </li>
@@ -156,8 +153,9 @@ if (isset($_SESSION['sebagai'])) {
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['nama_lengkap']; ?></span>
-                <img class="img-profile rounded-circle" src="../../assets/img/undraw_profile.svg">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['username']; ?></span>
+                <img class="img-profile rounded-circle"
+               src="../../assets/img/undraw_profile.svg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

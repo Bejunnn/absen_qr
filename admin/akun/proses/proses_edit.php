@@ -11,7 +11,7 @@ include '../../../koneksi.php';
   //cek dulu jika merubah foto produk jalankan coding ini
  {
       // jalankan query UPDATE berdasarkan ID yang produknya kita edit
-      $query  = "UPDATE login SET username = '$username', password = '$password', nama = '$nama',sebagai = '$sebagai'";
+      $query  = "UPDATE admin SET username = '$username', password = '$password', nama = '$nama',sebagai = '$sebagai'";
       $query .= "WHERE id = '$id'";
       $result = mysqli_query($koneksi, $query);
       // periska query apakah ada error

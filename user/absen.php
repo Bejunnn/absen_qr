@@ -1,15 +1,15 @@
+
 <?php
-include '../koneksi.php';
+include "../koneksi.php";
+$query = "SELECT * FROM siswa";
+$result = mysqli_query($koneksi, $query);
+$data = mysqli_fetch_assoc($result);
+
 session_start();
-if (!isset($_SESSION['sebagai'])) {
+
+if (!isset($_SESSION['nama'])) {
     header("Location: ../index.php");
-}
-
-
-if (isset($_SESSION['sebagai'])) {
-    if ($_SESSION['sebagai'] == 'admin') {
-        header('Location: admin.php');
-    }
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -26,6 +26,7 @@ if (isset($_SESSION['sebagai'])) {
     <title>Homepage</title>
 
     <!-- Custom fonts for this template-->
+    <link rel="icon" href="../assets/img/smkmadya.png">
     <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
@@ -64,7 +65,7 @@ if (isset($_SESSION['sebagai'])) {
         margin-bottom: 10px;
     }
 
-    select,
+    input,
     button {
         width: 100%;
         height: 50px;
@@ -80,7 +81,7 @@ if (isset($_SESSION['sebagai'])) {
         cursor: pointer;
     }
 
-    select {
+    input {
         border: 1px solid #8b8a8a;
         padding-left: 10px;
         margin-bottom: 15px;
@@ -226,24 +227,11 @@ if (isset($_SESSION['sebagai'])) {
                                 <div class="container">
                                     <div class="header">
                                         <h1>QR Code Generator</h1>
-                                        <p>Select nis to Generate a QR Code</p>
+                                        <p>Ketik NIS to Generate a QR Code</p>
                                     </div>
                                     <div class="input-form">
                                         <!-- Corrected class name here -->
-                                        <select class="qr-input" name="nis" id="nis" onchange="detail()">
-                                            <option value="">Pilih Nomor Induk Siswa Nasional</option>
-                                            <?php
-                                            include "koneksi.php";
-
-                                            $query = mysqli_query($koneksi, "select * from siswa");
-                                            while ($data = mysqli_fetch_array($query)) {
-                                            ?>
-                                                <option value="<?php echo $data['nis']; ?>"><?php echo $data['nis']; ?></option>
-                                            <?php
-                                            }
-                                            ?>
-                                        </select>
-
+                                        <input type="text" class="qr-input" value="<?php echo $data['nis']; ?>" readonly>
                                         <button class="generate-btn">Generate QR Code</button>
                                     </div>
 
@@ -305,20 +293,6 @@ if (isset($_SESSION['sebagai'])) {
                         generateBtn.innerText = "Generate QR Code";
                     }
                 }
-            }
-        </script>
-        <script>
-            function detail() {
-                var nis = $("#nis").val();
-                $.ajax({
-                    url: "data.php",
-                    method: "POST",
-                    data: {
-                        nis: nis
-                    },
-                    dataType: "json",
-                    success: function(data) {}
-                })
             }
         </script>
 </body>
