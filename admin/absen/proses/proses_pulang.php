@@ -1,6 +1,8 @@
 <?php
+// memanggil file koneksi.php untuk melakukan koneksi database
 include '../../../koneksi.php';
 
+// membuat variabel untuk menampung data dari form
 $nis = $_POST['nis'];
 $jam_pulang = $_POST['jam_pulang'];
 
@@ -13,7 +15,7 @@ if (empty($nis) || empty($jam_pulang)) {
 // Cek data
 $cek_data = mysqli_query($koneksi, "SELECT * FROM pulang WHERE nis = '$nis'") or die(mysqli_error($koneksi));
 if (mysqli_num_rows($cek_data) > 0) {
-    echo "<script>alert('Anda sudah pulang.');window.location='../input_plg.php';</script>";
+    echo "<script>alert('Anda sudah pulang.');window.location='../index.php';</script>";
 } else {
     // Query menggunakan prepared statement
     $query = "INSERT INTO pulang (nis, jam_pulang) VALUES (?, ?)";
@@ -25,11 +27,13 @@ if (mysqli_num_rows($cek_data) > 0) {
         mysqli_stmt_close($stmt);
 
         if ($result) {
-            echo "<script>alert('Anda Berhasil Pulang.');window.location='../input_plg.php';</script>";
+            echo "<script>alert('Anda Berhasil Pulang.');window.location='../index.php';</script>";
         } else {
             die("Query gagal dijalankan: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
         }
     } else {
-        die("Prepared statement gagal: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
+        // tampilkan alert dan redirect ke halaman index.php
+        echo "<script>alert('Anda Berhasil Absen.');window.location='../index.php';</script>";
     }
 }
+?>
