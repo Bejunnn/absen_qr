@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
 
     $faculty = "school-of-ict";
 
-    $sql = "SELECT * FROM siswa WHERE nis = '$index';";
+    $sql = "SELECT * FROM data_siswa WHERE nis = '$index';";
 
     $stmt = $koneksi->prepare($sql);
 
@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) {
     if ($stmt->num_rows() > 0) {
         $validation = "User Validated Successfully";
 
-        $data_select = "SELECT nama, kelas FROM siswa WHERE nis = '$index';";
+        $data_select = "SELECT nama, kelas FROM data_siswa WHERE nis = '$index';";
 
         $stmt = $koneksi->prepare($data_select);
 
@@ -113,6 +113,7 @@ if (isset($_POST['submit'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="../siswa/index.php">Siswa</a>
                         <a class="collapse-item" href="../akun/index.php">Admin</a>
+                        <a class="collapse-item" href="../akun_siswa/index.php">Akun Siswa</a>
                     </div>
                 </div>
             </li>
@@ -124,7 +125,7 @@ if (isset($_POST['submit'])) {
                 </a>
                 <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="input.php">Absen</a>
+                        <a class="collapse-item" href="input.php">Masuk</a>
                         <a class="collapse-item active" href="input_plg.php">Pulang</a>
                     </div>
                 </div>

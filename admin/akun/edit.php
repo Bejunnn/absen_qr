@@ -96,6 +96,7 @@ if (!isset($_SESSION['username'])) {
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item " href="../siswa/index.php">Siswa</a>
             <a class="collapse-item active" href="index.php">Admin</a>
+            <a class="collapse-item active" href="../akun_siswa/index.php">Akun Siswa</a>
           </div>
         </div>
       </li>
@@ -107,7 +108,7 @@ if (!isset($_SESSION['username'])) {
         </a>
         <div id="data" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="../absen/input.php">Absen</a>
+            <a class="collapse-item" href="../absen/input.php">Masuk</a>
             <a class="collapse-item" href="../absen/input_plg.php">Pulang</a>
           </div>
         </div>
@@ -209,7 +210,7 @@ if (!isset($_SESSION['username'])) {
                         <input type="text" value="<?php echo $data['username']; ?>" name="username" id="username" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                       </div>
                       <div class="form-group">
-                        <label for="password">Username</label>
+                        <label for="password">Password</label>
                         <input type="text" value="<?php echo $data['password']; ?>" name="password" id="password" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                       </div>
                       <div class="form-group">
@@ -218,11 +219,7 @@ if (!isset($_SESSION['username'])) {
                       </div>
                       <div class="form-group">
                         <label for="sebagai">Sebagai</label>
-                        <select name="sebagai" id="sebagai" class="form-control">
-                          <option value="">Pilih</option>
-                          <option value="admin">Admin</option>
-                          <option value="user">User</option>
-                        </select>
+                        <input type="text" value="<?php echo $data['sebagai']; ?>" name="sebagai" id="sebagai" required="required" placeholder="ketik" autocomplete="off" class="form-control" readonly>
                       </div>
                       <div class="form-group">
                         <button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-pen"></i> Ubah</button>

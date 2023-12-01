@@ -25,7 +25,7 @@ $koneksi->close();
 <!DOCTYPE html>
 <html lang="en" >
 <head>
-  <link rel="icon" href="../assets/img/smkmadya.png">
+  <link rel="icon" href="assets/img/smkmadya.png">
   <meta charset="UTF-8">
   <title>Login</title>
   <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css">

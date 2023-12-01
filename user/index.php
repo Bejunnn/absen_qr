@@ -1,11 +1,17 @@
-
 <?php
+// Start the session
 session_start();
 
-if (!isset($_SESSION['nama'])) {
+// Check if 'nama' is set in the session, if not, redirect to the login page
+if (!isset($_SESSION['nis'])) {
     header("Location: ../index.php");
     exit();
 }
+
+// Access the NIS from the session
+$nis = $_SESSION['nis'];
+
+// Now you can use $nis wherever you need it
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,18 +36,82 @@ if (!isset($_SESSION['nama'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600&display=swap" rel="stylesheet">
-    
+
 </head>
-
 <style>
-    *{
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: 'Prompt', sans-serif;
-}
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+        font-family: 'Prompt', sans-serif;
+    }
 
+    .container {
+        background-color: #fff;
+        width: 400px;
+        height: 250px;
+        border-radius: 7px;
+        padding: 20px;
+        transition: .1s;
+    }
+
+    .header h1 {
+        font-size: 23px;
+        font-weight: 500;
+        margin-bottom: 5px;
+    }
+
+    .header p {
+        font-size: 16px;
+        margin-bottom: 10px;
+    }
+
+    input,
+    button {
+        width: 100%;
+        height: 50px;
+        outline: none;
+        border-radius: 5px;
+    }
+
+    button {
+        border: none;
+        background-color: #1d68d8;
+        font-size: 15px;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    input {
+        border: 1px solid #8b8a8a;
+        padding-left: 10px;
+        margin-bottom: 15px;
+        font-size: 20px;
+    }
+
+    .qr-code {
+        padding: 25px 0;
+        border: 1px solid #ccc;
+        margin-top: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        opacity: 0;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .container.active {
+        height: 490px;
+    }
+
+    .container.active .qr-code {
+        opacity: 1;
+        pointer-events: auto;
+    }
 </style>
+
 <body id="page-top">
 
     <!-- Page Wrapper -->
@@ -62,24 +132,11 @@ if (!isset($_SESSION['nama'])) {
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="index.php">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span></a>
             </li>
-
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link" href="absen.php">
-                    <i class="fas fa-fw fa-receipt"></i>
-                    <span>QR</span></a>
-            </li>
-
 
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -120,7 +177,7 @@ if (!isset($_SESSION['nama'])) {
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['nama']; ?></span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
                                 <img class="img-profile rounded-circle" src="../assets/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
@@ -150,19 +207,29 @@ if (!isset($_SESSION['nama'])) {
                     <div class="container-fluid">
 
                         <!-- DataTales Example -->
-
                         <div class="card shadow mb-4">
                             <div class="card-header py-3">
-                                <h6 class="m-0 font-weight-bold text-primary">Dashboard</h6>
+                                <h6 class="m-0 font-weight-bold text-primary">QR Code</h6>
                             </div>
                             <div class="card-body">
-                                <div>
-                                    Selamat datang <?= $_SESSION['nama']; ?> di aplikasi absensi.
+                                <div class="container">
+                                    <div class="header">
+                                        <h1>QR Code Generator</h1>
+                                        <p>Ketik NIS to Generate a QR Code</p>
+                                    </div>
+                                    <div class="input-form">
+                                        <!-- Corrected class name here -->
+                                        <input type="text" class="qr-input" value="<?php echo $nis; ?>" readonly>
+                                        <button class="generate-btn">Generate QR Code</button>
+                                    </div>
+                                    <div class="qr-code">
+                                        <img class="qr-image">
+                                    </div>
+
+
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
 
                 </div>
@@ -196,7 +263,24 @@ if (!isset($_SESSION['nama'])) {
         <!-- Page level custom scripts -->
         <script src="../assets/js/demo/chart-area-demo.js"></script>
         <script src="../assets/js/demo/chart-pie-demo.js"></script>
+        <script>
+            var container = document.querySelector(".container");
+            var generateBtn = document.querySelector(".generate-btn");
+            // Corrected class name here
+            var qrInput = document.querySelector(".qr-input");
+            var qrImg = document.querySelector(".qr-image");
 
+            generateBtn.onclick = function() {
+                if (qrInput.value.length > 0) {
+                    generateBtn.innerText = "Generating QR Code...";
+                    qrImg.src = "https://api.qrserver.com/v1/create-qr-code/?size=170x170&data=" + qrInput.value;
+                    qrImg.onload = function() {
+                        container.classList.add("active");
+                        generateBtn.innerText = "Generate QR Code";
+                    }
+                }
+            }
+        </script>
 </body>
 
 </html>

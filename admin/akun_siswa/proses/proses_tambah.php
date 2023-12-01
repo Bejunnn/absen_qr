@@ -5,13 +5,12 @@ include '../../../koneksi.php';
 	// membuat variabel untuk menampung data dari form
 
   $nis = $_POST['nis'];
-  $nama = $_POST['nama'];
-  $kelas= $_POST['kelas'];
+  $password = $_POST['password'];
 
 
 //cek dulu jika ada foto produk jalankan coding ini
 if($nis!= "") {
-   $query = "INSERT INTO data_siswa ( nis, nama, kelas) VALUES ( '$nis','$nama','$kelas' )";
+   $query = "INSERT INTO login_siswa ( nis, password) VALUES ( '$nis','$password')";
                   $result = mysqli_query($koneksi, $query);
                   // periska query apakah ada error
                   if(!$result){

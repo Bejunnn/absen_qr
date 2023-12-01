@@ -1,6 +1,6 @@
 <?php
 include('../../koneksi.php');
-$result = mysqli_query($koneksi, "SELECT * FROM data_siswa");
+$result = mysqli_query($koneksi, "SELECT * FROM login_siswa ");
 $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
   $rows[] = $row;
@@ -77,9 +77,9 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="booking" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item active" href="index.php">Siswa</a>
+                        <a class="collapse-item " href="../siswa/index.php">Siswa</a>
                         <a class="collapse-item" href="../akun/index.php">Admin</a>
-                        <a class="collapse-item" href="../akun_siswa/index.php">Akun Siswa</a>
+                        <a class="collapse-item active" href="index.php">Akun Siswa</a>
                     </div>
                 </div>
             </li>
@@ -109,7 +109,6 @@ if (!isset($_SESSION['username'])) {
                     </div>
                 </div>
             </li>
-
 
 
             
@@ -157,6 +156,7 @@ if (!isset($_SESSION['username'])) {
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['username']; ?></span>
                                 <img class="img-profile rounded-circle"
                                     src="../../assets/img/undraw_profile.svg">
+                            </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
@@ -195,12 +195,8 @@ if (!isset($_SESSION['username'])) {
                                             <input type="text" name="nis" id="nis" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                                         </div>
                                         <div class="form-group">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" name="nama" id="nama" required="required" placeholder="ketik" autocomplete="off" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="kelas">Kelas</label>
-                                            <input type="text" name="kelas" id="kelas" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+                                            <label for="password">Password</label>
+                                            <input type="text" name="password" id="password" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                                         </div>
                                         <div class="form-group">
                                             <button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Tambah</button>
@@ -214,7 +210,7 @@ if (!isset($_SESSION['username'])) {
                         <div class="col-sm-8">
                             <div class="card shadow">
                                 <div class="card-header">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Siswa</h6>
+                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Admin</h6>
                                 </div>
                                 <div class="card-body">
 
@@ -223,8 +219,7 @@ if (!isset($_SESSION['username'])) {
                                             <tr>
                                                 <th>No</th>
                                                 <th>nis</th>
-                                                <th>Nama</th>
-                                                <th>Kelas</th>
+                                                <th>Password</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
@@ -237,11 +232,10 @@ if (!isset($_SESSION['username'])) {
 
                                                     <td><?= $no++ ?></td>
                                                     <td><?= $data['nis']; ?></td>
-                                                    <td><?= $data['nama']; ?></td>
-                                                    <td><?= $data['kelas']; ?></td>
+                                                    <td><?= $data['password']; ?></td>
                                                     <td>
-                                                        <a title="edit" class="btn btn-primary" href="edit.php?nis=<?php echo $data['nis']; ?>"><i class="fas fa-edit"></i></a>
-                                                        <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?nis=<?php echo $data['nis']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
+                                                        <a title="edit" class="btn btn-primary" href="edit.php?id=<?php echo $data['id']; ?>"><i class="fas fa-edit"></i></a>
+                                                        <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?id=<?php echo $data['id']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
                                                     </td>
                                                 </tr>
                                             <?php

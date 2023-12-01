@@ -72,6 +72,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="siswa/index.php">Siswa</a>
                         <a class="collapse-item" href="akun/index.php">Admin</a>
+                        <a class="collapse-item" href="akun_siswa/index.php">Akun Siswa</a>
                     </div>
                 </div>
             </li>
@@ -83,7 +84,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="absen/input.php">Absen</a>
+                        <a class="collapse-item" href="absen/input.php">Masuk</a>
                         <a class="collapse-item" href="absen/input_plg.php">Pulang</a>
                     </div>
                 </div>

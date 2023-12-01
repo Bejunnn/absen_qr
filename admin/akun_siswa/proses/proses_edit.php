@@ -3,14 +3,14 @@
 include '../../../koneksi.php';
 
 	// membuat variabel untuk menampung data dari form
+  $id = $_POST['id'];
   $nis = $_POST['nis'];
-  $nama = $_POST['nama'];
-  $kelas = $_POST['kelas'];
+  $password = $_POST['password'];
   //cek dulu jika merubah foto produk jalankan coding ini
  {
       // jalankan query UPDATE berdasarkan ID yang produknya kita edit
-      $query  = "UPDATE data_siswa SET nis = '$nis', nama = '$nama',kelas = '$kelas'";
-      $query .= "WHERE nis = '$nis'";
+      $query  = "UPDATE login_siswa SET nis = '$nis', password = '$password'";
+      $query .= "WHERE id = '$id'";
       $result = mysqli_query($koneksi, $query);
       // periska query apakah ada error
       if(!$result){

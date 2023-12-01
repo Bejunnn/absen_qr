@@ -3,12 +3,12 @@
 include '../../koneksi.php';
 
 // mengecek apakah di url ada nilai GET id
-if (isset($_GET['nis'])) {
+if (isset($_GET['id'])) {
   // ambil nilai id dari url dan disimpan dalam variabel $id
-  $nis = ($_GET["nis"]);
+  $id = ($_GET["id"]);
 
   // menampilkan data dari database yang mempunyai id=$id
-  $query = "SELECT * FROM data_siswa WHERE nis='$nis'";
+  $query = "SELECT * FROM login_siswa WHERE id='$id'";
   $result = mysqli_query($koneksi, $query);
   // jika data gagal diambil maka akan tampil error berikut
   if (!$result) {
@@ -88,32 +88,32 @@ if (!isset($_SESSION['username'])) {
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item active">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#booking" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-table"></i>
-                    <span>Kelola Data</span>
-                </a>
-                <div id="booking" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item active" href="index.php">Siswa</a>
-                        <a class="collapse-item" href="../akun/index.php">Admin</a>
-                        <a class="collapse-item" href="../akun_siswa/index.php">Akun Siswa</a>
-                    </div>
-                </div>
-            </li>
-            <hr class="sidebar-divider">
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#data" aria-expanded="true" aria-controls="collapseTwo">
-                    <i class="fas fa-fw fa-receipt"></i>
-                    <span>Absensi</span>
-                </a>
-                <div id="data" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="../absen/input.php">Masuk</a>
-                        <a class="collapse-item" href="../absen/input_plg.php">Pulang</a>
-                    </div>
-                </div>
-            </li>
-            <hr class="sidebar-divider">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#booking" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Kelola Data</span>
+        </a>
+        <div id="booking" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item " href="../siswa/index.php">Siswa</a>
+            <a class="collapse-item" href="../akun/index">Admin</a>
+            <a class="collapse-item active" href="index.php">Akun Siswa</a>
+          </div>
+        </div>
+      </li>
+      <hr class="sidebar-divider">
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#data" aria-expanded="true" aria-controls="collapseTwo">
+          <i class="fas fa-fw fa-receipt"></i>
+          <span>Absensi</span>
+        </a>
+        <div id="data" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <a class="collapse-item" href="../absen/input.php">Masuk</a>
+            <a class="collapse-item" href="../absen/input_plg.php">Pulang</a>
+          </div>
+        </div>
+      </li>
+      <hr class="sidebar-divider">
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#data2" aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-table"></i>
@@ -167,7 +167,8 @@ if (!isset($_SESSION['username'])) {
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['username']; ?></span>
-                <img class="img-profile rounded-circle" src="../../assets/img/undraw_profile.svg">
+                <img class="img-profile rounded-circle"
+               src="../../assets/img/undraw_profile.svg">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -202,25 +203,21 @@ if (!isset($_SESSION['username'])) {
                 <div class="card-body">
                   <form method="POST" action="proses/proses_edit.php" enctype="multipart/form-data">
                     <section class="base">
-                    <!-- menampung nilai id  yang akan di edit -->
-                    <input name="nis" value="<?php echo $data['nis']; ?>" hidden />
-                    <div class="form-group">
-                      <label for="nis">nis</label>
-                      <input type="text" value="<?php echo $data['nis']; ?>" name="nis" id="nis" required="required" placeholder="ketik" autocomplete="off" class="form-control">
-                    </div>
-                    <div class="form-group">
-                      <label for="nama">Nama Siswa</label>
-                      <input type="text" value="<?php echo $data['nama']; ?>" name="nama" id="nama" required="required" placeholder="ketik" autocomplete="off" class="form-control">
-                    </div>
+                      <!-- menampung nilai id  yang akan di edit -->
+                      <input name="id" value="<?php echo $data['id']; ?>" hidden />
                       <div class="form-group">
-                        <label for="kelas">Kelas</label>
-                        <input type="kelas" value="<?php echo $data['kelas']; ?>" name="kelas" id="kelas" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+                        <label for="nis">Nis</label>
+                        <input type="text" value="<?php echo $data['nis']; ?>" name="nis" id="nis" required="required" placeholder="ketik" autocomplete="off" class="form-control">
                       </div>
-                    <div class="form-group">
-                      <button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-pen"></i> Ubah</button>
-                      <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
-                      <a href="index.php" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
-                    </div>
+                      <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="text" value="<?php echo $data['password']; ?>" name="password" id="password" required="required" placeholder="ketik" autocomplete="off" class="form-control">
+                      </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-pen"></i> Ubah</button>
+                        <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
+                        <a href="index.php" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
+                      </div>
                     </section>
                   </form>
                 </div>

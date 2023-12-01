@@ -1,6 +1,6 @@
 <?php
 include('../../koneksi.php');
-$result = mysqli_query($koneksi, "SELECT * FROM siswa");
+$result = mysqli_query($koneksi, "SELECT * FROM data_siswa");
 $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
@@ -106,6 +106,7 @@ if (!isset($_SESSION['username'])) {
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="../siswa/index.php">Siswa</a>
                         <a class="collapse-item" href="../akun/index.php">Admin</a>
+                        <a class="collapse-item" href="../akun_siswa/index.php">Akun Siswa</a>
                     </div>
                 </div>
             </li>
@@ -117,7 +118,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item " href="input.php">Absen</a>
+                        <a class="collapse-item " href="input.php">Masuk</a>
                         <a class="collapse-item active" href="input_plg.php">Pulang</a>
                     </div>
                 </div>
@@ -179,7 +180,7 @@ if (!isset($_SESSION['username'])) {
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?= $_SESSION['username']; ?></span>
-                                <img class="img-profile rounded-circle" src="../assets/img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="../../assets/img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
