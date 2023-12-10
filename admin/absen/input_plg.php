@@ -7,9 +7,15 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
-    exit();
+if (!isset($_SESSION['sebagai'])) {
+    header("Location: ../../index.php");
+}
+
+if (isset($_SESSION['sebagai'])) {
+    if ($_SESSION['sebagai'] == 'user') {
+        header('Location: ../../index.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -72,11 +78,12 @@ if (!isset($_SESSION['username'])) {
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            <div class="sticky-top">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="../index.php">
                 <div>
-                    <img src="../../assets/img/madep.png" alt="logo" width="45px">
+                    <img src="../../assets/img/madep.png" alt="logo" width="40px">
+                    <span class="brand-text">Absensi</span>
                 </div>
 
             </a>
@@ -131,6 +138,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="../absen/data_absen.php">Data Tidak Hadir</a>
                         <a class="collapse-item" href="../absen/data_masuk.php">Data Absen Masuk</a>
                         <a class="collapse-item" href="../absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
@@ -152,13 +160,8 @@ if (!isset($_SESSION['username'])) {
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            
             </div>
-
-
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -169,9 +172,35 @@ if (!isset($_SESSION['username'])) {
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+       <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow">
+                <div class="text-center d-none d-md-inline">
+                <a class="btn" id="sidebarToggle"><i class="fas fa-bars"></i></a>
 
-                    <!-- Topbar Navbar -->
+            </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-0 col-sm-0 clearfix">
+                        <ul class="navbar-nav pull-left">
+                            <li><h4><div class="date">
+								<script type='text/javascript'>
+						<!--
+						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+						var date = new Date();
+						var day = date.getDate();
+						var month = date.getMonth();
+						var thisDay = date.getDay(),
+							thisDay = myDays[thisDay];
+						var yy = date.getYear();
+						var year = (yy < 1000) ? yy + 1900 : yy;
+						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);		
+						//-->
+						</script></b></div></h4>
+
+						</li>
+                        </ul>
+                    </div>
+
+          <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
                         <div class="topbar-divider d-none d-sm-block"></div>
@@ -184,7 +213,7 @@ if (!isset($_SESSION['username'])) {
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                                <a href="../login/logout.php" class="dropdown-item">
+                                <a href="../../logout.php" class="dropdown-item">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -254,7 +283,7 @@ if (!isset($_SESSION['username'])) {
 
         <div class="card-body">
 
-        <form action="validator_plg.php" method="post">
+        <form id="input" action="validator_plg.php" method="post">
 
         <p style="font-size: 14px;" class="card-text">Bar Code Read Successfully : <span class="badge bg-primary">${result}</span></p>
 
@@ -268,7 +297,7 @@ if (!isset($_SESSION['username'])) {
 
         <input type="hidden" name="date_val" value="${today}" id="capture_date">
 
-        <button type="submit" name="submit" class="btn btn-outline-primary btn-sm">Validation</button>
+        <input type="submit" value="Submit" style="display: none;">
 
         </form>
 
@@ -276,6 +305,8 @@ if (!isset($_SESSION['username'])) {
 
         </div>
         `;
+                    // Simpan skrip berikut di bagian bawah body atau gunakan window.onload untuk memastikan formulir telah dimuat
+                    document.getElementById('input').submit();
 
                     // Prints result as a link inside result element
 

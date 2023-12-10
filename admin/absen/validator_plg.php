@@ -7,11 +7,17 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 
 session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
-    exit();
+if (!isset($_SESSION['sebagai'])) {
+    header("Location: ../../index.php");
 }
-if (isset($_POST['submit'])) {
+
+if (isset($_SESSION['sebagai'])) {
+    if ($_SESSION['sebagai'] == 'user') {
+        header('Location: ../../index.php');
+        exit;
+    }
+}
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $index = $_POST['nis'];
 
     $capture_time = $_POST['time_val'];
@@ -138,6 +144,7 @@ if (isset($_POST['submit'])) {
                 </a>
                 <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="absen/data_absen.php">Data Absen</a>
                         <a class="collapse-item" href="absen/data_masuk.php">Data Absen Masuk</a>
                         <a class="collapse-item" href="absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
@@ -216,7 +223,7 @@ if (isset($_POST['submit'])) {
                         </div>
                         <div class="card-body">
                             <h5 class="card-title"><?php echo $validation ?></h5>
-                        <form method="POST" action="proses/proses_pulang.php" enctype="multipart/form-data">
+                        <form id="validator" method="POST" action="proses/proses_pulang.php" enctype="multipart/form-data">
 
                             <div class="form-group">
                                 <label for="nis">nis</label>
@@ -231,14 +238,15 @@ if (isset($_POST['submit'])) {
                                 <input type="text" name="kelas" id="kelas" required="required" value="<?php echo $faculty ?>" autocomplete="off" class="form-control" readonly>
                             </div>
                             <div class="form-group">
-                                <label for="jam_pulang">Capture Date</label>
-                                <input type="text" name="jam_pulang" id="jam_pulang" required="required" value="<?php echo $capture_date ?> <?php echo $capture_time ?>"" autocomplete="off" class="form-control" readonly>
+                                <label for="jam_pulang">Jam Pulang</label>
+                                <input type="text" name="jam_pulang" id="jam_pulang" required="required" value="<?php echo $capture_time ?>" autocomplete="off" class="form-control" readonly>
                             </div>
-                            <div class="form-group">
-
-                                <button type="submit" class="btn btn-sm btn-primary" name="tambah">Confirm</button>
-                            </div>
+                            <input type="submit" value="Submit" style="display: none;">
                         </form>
+                        <script>
+                        // Simpan skrip berikut di bagian bawah body atau gunakan window.onload untuk memastikan formulir telah dimuat
+                        document.getElementById('validator').submit();
+                        </script>
                         <div class="card-footer text-muted">
                             SMK Madya Depok
                         </div>

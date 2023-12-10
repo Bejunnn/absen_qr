@@ -12,7 +12,7 @@ include '../../../koneksi.php';
 
 //cek dulu jika ada foto produk jalankan coding ini
 if($username!= "") {
-   $query = "INSERT INTO admin ( username, password, nama, sebagai) VALUES ( '$username','$password','$nama' ,'$sebagai')";
+   $query = "INSERT INTO login ( username, password, nama, sebagai) VALUES ( '$username','$password','$nama' ,'$sebagai')";
                   $result = mysqli_query($koneksi, $query);
                   // periska query apakah ada error
                   if(!$result){

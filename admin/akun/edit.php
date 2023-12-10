@@ -26,9 +26,15 @@ if (isset($_GET['id'])) {
   echo "<script>alert('Masukkan data id.');window.location='index.php';</script>";
 }
 session_start();
-if (!isset($_SESSION['username'])) {
-  header("Location: ../index.php");
-  exit();
+if (!isset($_SESSION['sebagai'])) {
+    header("Location: ../../index.php");
+}
+
+if (isset($_SESSION['sebagai'])) {
+    if ($_SESSION['sebagai'] == 'user') {
+        header('Location: ../../index.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -42,7 +48,7 @@ if (!isset($_SESSION['username'])) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>Kelola Data Mobil</title>
+  <title>Absensi | Edit Akun</title>
 
   <!-- Custom fonts for this template-->
   <link rel="icon" href="../../assets/img/smkmadya.png">
@@ -62,11 +68,12 @@ if (!isset($_SESSION['username'])) {
 
     <!-- Sidebar -->
     <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+      <div class="sticky-top">
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div>
-          <img src="../../assets/img/madep.png" alt="logo" width="45px">
+          <img src="../../assets/img/madep.png" alt="logo" width="40px">
+          <span class="brand-text">Absensi</span>
         </div>
 
       </a>
@@ -121,6 +128,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="../absen/data_absen.php">Data Tidak Hadir</a>
                         <a class="collapse-item" href="../absen/data_masuk.php">Data Absen Masuk</a>
                         <a class="collapse-item" href="../absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
@@ -139,13 +147,7 @@ if (!isset($_SESSION['username'])) {
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
-      <!-- Sidebar Toggler (Sidebar) -->
-      <div class="text-center d-none d-md-inline">
-        <button class="rounded-circle border-0" id="sidebarToggle"></button>
       </div>
-
-
-
     </ul>
     <!-- End of Sidebar -->
 
@@ -156,7 +158,33 @@ if (!isset($_SESSION['username'])) {
       <div id="content">
 
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+       <nav class="navbar navbar-expand navbar-light bg-white topbar mb-0 static-top shadow">
+                <div class="text-center d-none d-md-inline">
+                <a class="btn" id="sidebarToggle"><i class="fas fa-bars"></i></a>
+
+            </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-0 col-sm-0 clearfix">
+                        <ul class="navbar-nav pull-left">
+                            <li><h4><div class="date">
+								<script type='text/javascript'>
+						<!--
+						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+						var date = new Date();
+						var day = date.getDate();
+						var month = date.getMonth();
+						var thisDay = date.getDay(),
+							thisDay = myDays[thisDay];
+						var yy = date.getYear();
+						var year = (yy < 1000) ? yy + 1900 : yy;
+						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);		
+						//-->
+						</script></b></div></h4>
+
+						</li>
+                        </ul>
+                    </div>
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -188,7 +216,6 @@ if (!isset($_SESSION['username'])) {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Data Siswa</h1>
           </div>
 
           <!-- Content Row -->
@@ -219,7 +246,11 @@ if (!isset($_SESSION['username'])) {
                       </div>
                       <div class="form-group">
                         <label for="sebagai">Sebagai</label>
+<<<<<<< HEAD
+                        <input type="text" name="sebagai" id="sebagai" value="<?php echo $data['sebagai']; ?>" class="form-control" readonly>
+=======
                         <input type="text" value="<?php echo $data['sebagai']; ?>" name="sebagai" id="sebagai" required="required" placeholder="ketik" autocomplete="off" class="form-control" readonly>
+>>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
                       </div>
                       <div class="form-group">
                         <button type="submit" class="btn btn-sm btn-success" name="ubah"><i class="fa fa-pen"></i> Ubah</button>

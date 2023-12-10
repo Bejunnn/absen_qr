@@ -14,10 +14,14 @@ if ($result->num_rows == 1) {
     // Login successful
     $_SESSION['password'] = $password;
     $_SESSION['nis'] = $nis;
-    header("Location: user/index.php"); // Redirect to dashboard or any other page
+    header("Location: siswa/index.php"); // Redirect to dashboard or any other page
 } else {
     // Login failed
+<<<<<<< HEAD
+    echo "<script>alert('nis atau nama Anda salah. Silahkan coba lagi!')</script>";
+=======
     echo "<script>alert('nis atau password Anda salah. Silahkan coba lagi!')</script>";
+>>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
 }
 }
 $koneksi->close();
@@ -28,7 +32,7 @@ $koneksi->close();
 <head>
 <link rel="icon" href="assets/img/smkmadya.png">
   <meta charset="UTF-8">
-  <title>Login</title>
+  <title>Absensi | Siswa Login</title>
   <link href="https://fonts.googleapis.com/css?family=Asap" rel="stylesheet"><link rel="stylesheet" href="assets/css/style.css">
 
 </head>

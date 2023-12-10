@@ -1,15 +1,21 @@
 <?php
 include('../../koneksi.php');
-$result = mysqli_query($koneksi, "SELECT * FROM admin");
+$result = mysqli_query($koneksi, "SELECT * FROM login");
 $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
   $rows[] = $row;
 }
 
 session_start();
-if (!isset($_SESSION['username'])) {
-    header("Location: ../index.php");
-    exit();
+if (!isset($_SESSION['sebagai'])) {
+    header("Location: ../../index.php");
+}
+
+if (isset($_SESSION['sebagai'])) {
+    if ($_SESSION['sebagai'] == 'user') {
+        header('Location: ../../index.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -23,7 +29,7 @@ if (!isset($_SESSION['username'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Kelola Data Siswa</title>
+    <title>Absensi | Kelola Data Admin</title>
 
     <!-- Custom fonts for this template-->
     <link rel="icon" href="../../assets/img/smkmadya.png">
@@ -45,11 +51,12 @@ if (!isset($_SESSION['username'])) {
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
+            <div class="sticky-top">
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div>
-               <img src="../../assets/img/madep.png" alt="logo" width="45px">
+               <img src="../../assets/img/madep.png" alt="logo" width="40px">
+               <span class="brand-text">Absensi</span>
                 </div>
                
             </a>
@@ -104,6 +111,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="../absen/data_absen.php">Data Tidak Hadir</a>
                         <a class="collapse-item" href="../absen/data_masuk.php">Data Absen Masuk</a>
                         <a class="collapse-item" href="../absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
@@ -125,13 +133,7 @@ if (!isset($_SESSION['username'])) {
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
-
-        
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -143,7 +145,32 @@ if (!isset($_SESSION['username'])) {
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <div class="text-center d-none d-md-inline">
+                <a class="btn" id="sidebarToggle"><i class="fas fa-bars"></i></a>
 
+            </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-0 col-sm-0 clearfix">
+                        <ul class="navbar-nav pull-left">
+                            <li><h4><div class="date">
+								<script type='text/javascript'>
+						<!--
+						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+						var date = new Date();
+						var day = date.getDate();
+						var month = date.getMonth();
+						var thisDay = date.getDay(),
+							thisDay = myDays[thisDay];
+						var yy = date.getYear();
+						var year = (yy < 1000) ? yy + 1900 : yy;
+						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);		
+						//-->
+						</script></b></div></h4>
+
+						</li>
+                        </ul>
+                    </div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -160,7 +187,7 @@ if (!isset($_SESSION['username'])) {
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a href="../login/logout.php" class="dropdown-item" >
+                                <a href="../../logout.php" class="dropdown-item" >
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -170,93 +197,104 @@ if (!isset($_SESSION['username'])) {
                     </ul>
 
                 </nav>
-                <!-- End of Topbar -->     
-                <!-- Begin Page Content -->
+                <!-- End of Topbar -->  
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                
+                    
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         
                     </div>
 
-                    <!-- DataTales Example -->
-                    <div class="row">
-
-                        <div class="col-sm-4">
-                            <div class="card shadow">
-                                <div class="card-header">
-                                    <h6 class="m-0 font-weight-bold text-primary">Tambah Data</h6>
-                                </div>
-                                <div class="card-body">
-                                    <form method="POST" action="proses/proses_tambah.php" enctype="multipart/form-data">
-                                        <div class="form-group">
-                                            <label for="username">Username</label>
-                                            <input type="text" name="username" id="username" required="required" placeholder="ketik" autocomplete="off" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Password</label>
-                                            <input type="text" name="password" id="password" required="required" placeholder="ketik" autocomplete="off" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="nama">Nama</label>
-                                            <input type="text" name="nama" id="nama" required="required" placeholder="ketik" autocomplete="off" class="form-control">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="sebagai">Sebagai</label>
-                                            <input type="text" name="sebagai" id="sebagai" value="admin" required="required" placeholder="ketik" autocomplete="off" class="form-control" readonly>
-                                        </div>
-                                        <div class="form-group">
-                                            <button type="submit" class="btn btn-sm btn-success" name="tambah"><i class="fa fa-plus"></i> Tambah</button>
-                                            <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                    <button style="margin-bottom:20px" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-icon-split"><span class="icon text-white-55"><i class="fas fa-plus"></span></i><span class="text">Tambah Akun</span></button>                                      
+                    <div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Kelola Data Akun</h6>
                         </div>
-
-                        <div class="col-sm-8">
-                            <div class="card shadow">
-                                <div class="card-header">
-                                    <h6 class="m-0 font-weight-bold text-primary">Daftar Admin</h6>
-                                </div>
-                                <div class="card-body">
-
-                                    <table class="table table-bordered" id="dataTable" cellspacing="0">
-                                        <thead>
-                                            <tr>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                            <tr align="center">
                                                 <th>No</th>
                                                 <th>Username</th>
-                                                <th>Password</th>
+                                                <th>Nama</th>
+                                                <th>Sebagai</th>
                                                 <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <?php
-                                        $no = '1';
-                                        foreach ($rows as $data) {
-                                        ?>
-                                            <tbody>
-                                                <tr>
-
-                                                    <td><?= $no++ ?></td>
-                                                    <td><?= $data['username']; ?></td>
-                                                    <td><?= $data['password']; ?></td>
-                                                    <td>
-                                                        <a title="edit" class="btn btn-primary" href="edit.php?id=<?php echo $data['id']; ?>"><i class="fas fa-edit"></i></a>
-                                                        <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?id=<?php echo $data['id']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
+												
+											</tr></thead><tbody>
+											<?php 
+											$form=mysqli_query($koneksi,"SELECT * FROM login ORDER BY id ASC");
+											$no=1;
+											while($b=mysqli_fetch_array($form)){
+                                                $id = $b['id'];
+												?>
+												
+                                                
+												<tr>
+													<td align="center"><?php echo $no++ ?></td>
+													<td><?php echo $b['username'] ?></td>
+													<td><?php echo $b['nama'] ?></td>
+													<td align="center">
+                                                        <?php if($b['sebagai'] == 'admin') {
+                                                                echo '<div class = "badge badge-success" style="width: 70px;"> <b>Admin</b> </div>';
+                                                                }
+                                                        ?>
+                                                        <?php if($b['sebagai'] == 'user') {
+                                                            echo '<div class = "badge badge-primary" style="width: 70px;"> <b>User</b> </div>';
+                                                            }
+                                                    ?></td>
+                                                    <td align="center">
+                                                        <a title="edit" class="btn btn-warning" href="edit.php?id=<?php echo $b['id']; ?>"><i class="fas fa-edit"></i></a>
+                                                        <a title="hapus" class="btn btn-danger" href="proses/proses_hapus.php?id=<?php echo $b['id']; ?>" onclick="return confirm('Anda yakin akan menghapus data ini?')"><i class="fas fa-trash"></i></a>&nbsp;
                                                     </td>
-                                                </tr>
-                                            <?php
-                                        }
-                                            ?>
+												</tr>		
+                                                
+                                                <?php 
+                                                };
+											?>
                                             </tbody>
-                                    </table>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
+            <!-- modal input -->
+			<div id="myModal" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Tambah Akun Baru</h4>
+						</div>
+                        <form method="POST" action="proses/proses_tambah.php" enctype="multipart/form-data">
+						<div class="modal-body">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" name="username" id="username" required="required" placeholder="Username" autocomplete="off" class="form-control">
                             </div>
-                        </div>
-                    </div>
-
-            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="text" name="password" id="password" required="required" placeholder="Password" autocomplete="off" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="nama">Nama</label>
+                                <input type="text" name="nama" id="nama" required="required" placeholder="Nama" autocomplete="off" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="sebagai">Sebagai</label>
+                                <select name="sebagai" id="sebagai" class="form-control">
+                                    <option value="admin">Admin</option>
+                                    <option value="user">User</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-plus"></i> Tambah</button>
+                                <button type="reset" class="btn btn-sm btn-danger"><i class="fa fa-times"></i> Batal</button>
+                                <a href="index.php" class="btn btn-sm btn-secondary"><i class="fa fa-reply"></i> Kembali</a>
+                            </div>
+						</form>
+					</div>
+				</div>
+			</div>   
             <!-- End of Main Content -->
 
 
@@ -269,24 +307,27 @@ if (!isset($_SESSION['username'])) {
     </a>
     <!-- Bootstrap core JavaScript-->
     <script src="../../assets/vendor/jquery/jquery.min.js"></script>
-        <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Core plugin JavaScript-->
-        <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
 
-        <!-- Custom scripts for all pages-->
-        <script src="../../assets/js/sb-admin-2.min.js"></script>
+    <!-- Custom scripts for all pages-->
+    <script src="../../assets/js/sb-admin-2.min.js"></script>
 
-        <!-- Page level plugins -->
-        <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
+    <!-- Page level plugins -->
+    <script src="../../assets/vendor/chart.js/Chart.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="../../assets/js/demo/chart-area-demo.js"></script>
-        <script src="../../assets/js/demo/chart-pie-demo.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="../../assets/js/demo/chart-area-demo.js"></script>
+    <script src="../../assets/js/demo/chart-pie-demo.js"></script>
 
+    <!-- Page level plugins -->
+    <script src="../../assets/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="../../assets/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-        <!-- Page level custom scripts -->
-        <script src="../../assets/js/demo/datatables-demo.js"></script>
+    <!-- Page level custom scripts -->
+    <script src="../../assets/js/demo/datatables-demo.js"></script>
 
 </body>
 

@@ -1,9 +1,15 @@
 <?php
+include '../koneksi.php';
 session_start();
-
-if (!isset($_SESSION['username'])) {
+if (!isset($_SESSION['sebagai'])) {
     header("Location: ../index.php");
-    exit();
+}
+
+if (isset($_SESSION['sebagai'])) {
+    if ($_SESSION['sebagai'] == 'user') {
+        header('Location: ../index.php');
+        exit;
+    }
 }
 ?>
 <!DOCTYPE html>
@@ -16,16 +22,13 @@ if (!isset($_SESSION['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Homepage</title>
-
+    <title>Absensi | Homepage</title>
     <!-- Custom fonts for this template-->
     <link rel="icon" href="../assets/img/smkmadya.png">
     <link href="../assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
-
     <!-- Custom styles for this template-->
     <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
 
@@ -38,11 +41,13 @@ if (!isset($_SESSION['username'])) {
 
         <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <div class="sticky-top">
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
                 <div>
-               <img src="../assets/img/madep.png" alt="logo" width="45px">
+               <img src="../assets/img/madep.png" alt="logo" width="40px">
+               <span class="brand-text">Absensi</span>
                 </div>
                
             </a>
@@ -97,6 +102,7 @@ if (!isset($_SESSION['username'])) {
                 </a>
                 <div id="data2" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item" href="absen/data_absen.php">Data Tidak Hadir</a>
                         <a class="collapse-item" href="absen/data_masuk.php">Data Absen Masuk</a>
                         <a class="collapse-item" href="absen/data_pulang.php">Data Absen Pulang</a>
                     </div>
@@ -116,13 +122,8 @@ if (!isset($_SESSION['username'])) {
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
-            <!-- Sidebar Toggler (Sidebar) -->
-            <div class="text-center d-none d-md-inline">
-                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            
             </div>
-
-        
-
         </ul>
         <!-- End of Sidebar -->
 
@@ -134,7 +135,32 @@ if (!isset($_SESSION['username'])) {
 
                 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <div class="text-center d-none d-md-inline">
+                <a class="btn" id="sidebarToggle"><i class="fas fa-bars"></i></a>
 
+            </div>
+                    <!-- profile info & task notification -->
+                    <div class="col-md-0 col-sm-0 clearfix">
+                        <ul class="navbar-nav pull-left">
+                            <li><h4><div class="date">
+								<script type='text/javascript'>
+						<!--
+						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+						var date = new Date();
+						var day = date.getDate();
+						var month = date.getMonth();
+						var thisDay = date.getDay(),
+							thisDay = myDays[thisDay];
+						var yy = date.getYear();
+						var year = (yy < 1000) ? yy + 1900 : yy;
+						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);		
+						//-->
+						</script></b></div></h4>
+
+						</li>
+                        </ul>
+                    </div>
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
@@ -151,7 +177,7 @@ if (!isset($_SESSION['username'])) {
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a href="logout.php" class="dropdown-item" >
+                                <a href="../logout.php" class="dropdown-item" >
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -162,37 +188,203 @@ if (!isset($_SESSION['username'])) {
 
                 </nav>
                 <!-- End of Topbar -->            
+                <?php
+                    $a = 0;
+                    $query  = "SELECT count(nis) AS tm FROM siswa WHERE nis";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $a  = $data['tm'];
+                    }
+                
+                    $b = 0;
+                    $query  = "SELECT count(id) AS lg FROM login WHERE id";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $b  = $data['lg'];
+                    }
 
+                    $c = 0;
+                    $query  = "SELECT count(nis) AS am FROM masuk WHERE id";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $c  = $data['am'];
+                    }
+                
+                    $d = 0;
+                    $query  = "SELECT count(id) AS ap FROM pulang WHERE id";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $d  = $data['ap'];
+                    }
+
+                    $e = 0;
+                    $query  = "SELECT count(nis) AS si FROM absen WHERE status='Izin'";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $e  = $data['si'];
+                    }
+                
+                    $f = 0;
+                    $query  = "SELECT count(id) AS ss FROM absen WHERE status='Sakit'";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $f  = $data['ss'];
+                    }
+
+                    $g = 0;
+                    $query  = "SELECT count(nis) AS sa FROM absen WHERE status='Alpha'";
+                    $sql    = mysqli_query($koneksi, $query);
+                    if(mysqli_num_rows($sql)>0){
+                    $data = mysqli_fetch_assoc($sql);
+                    $g  = $data['sa'];
+                    }
+                ?>
                 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
-
-                    <!-- Page Heading -->
-                    <br>
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        
-                    </div>
-                    <!-- Begin Page Content -->
-                <div class="container-fluid">
-
-                    <!-- DataTales Example -->
-                    
-                    <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Dashboard</h6>
-                        </div>
-                        <div class="card-body">
-                            <div >
-                            Selamat datang <?= $_SESSION['username']; ?>, anda login sebagai admin di aplikasi absensi.
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4"></div>
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">Dashboard</h6>
                             </div>
-                        </div>
+                        <div class="card-body">
+                        
+                        <!-- Content Row -->
+                        <div class="row">
+
+                            <!-- Earnings (Monthly) Card Example -->
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-primary shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
+                                                    Total Siswa</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($a); ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-users fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-warning shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xl font-weight-bold text-warning text-uppercase mb-1">
+                                                    Total Pengguna</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($b); ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-user-tie fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-success shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xl font-weight-bold text-success text-uppercase mb-1">
+                                                    Absen Masuk</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($c); ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tags fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-3 col-md-6 mb-4">
+                                <div class="card border-left-danger shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xl font-weight-bold text-danger text-uppercase mb-1">
+                                                    Absen Pulang</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($d); ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-tags fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                            <div class="card border-left-success shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div class="text-xl font-weight-bold text-success text-uppercase mb-1">
+                                                            Total Siswa Izin</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($e); ?></div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-address-book fa-2x text-gray-300"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                            <div class="card border-left-warning shadow h-100 py-2">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters align-items-center">
+                                                        <div class="col mr-2">
+                                                            <div class="text-xl font-weight-bold text-warning text-uppercase mb-1">
+                                                            Total Siswa Sakit</div>
+                                                            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($f); ?></div>
+                                                        </div>
+                                                        <div class="col-auto">
+                                                            <i class="fas fa-address-book fa-2x text-gray-300"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                            <div class="col-xl-4 col-md-6 mb-4">
+                                <div class="card border-left-danger shadow h-100 py-2">
+                                    <div class="card-body">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col mr-2">
+                                                <div class="text-xl font-weight-bold text-danger text-uppercase mb-1">
+                                                    Total Siswa Alpha</div>
+                                                <div class="h5 mb-0 font-weight-bold text-gray-800"><?= number_format($g); ?></div>
+                                            </div>
+                                            <div class="col-auto">
+                                                <i class="fas fa-address-book fa-2x text-gray-300"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>   
+
+                    </div>
 
                 </div>
-
-                </div>
-
-            </div>
-            <!-- End of Main Content -->
+                <!-- End of Main Content -->
 
 
         </div>
