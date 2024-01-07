@@ -8,7 +8,7 @@ if (isset($_GET['nis'])) {
   $nis = ($_GET["nis"]);
 
   // menampilkan data dari database yang mempunyai id=$id
-  $query = "SELECT * FROM siswa WHERE nis='$nis'";
+  $query = "SELECT * FROM data_siswa WHERE nis='$nis'";
   $result = mysqli_query($koneksi, $query);
   // jika data gagal diambil maka akan tampil error berikut
   if (!$result) {

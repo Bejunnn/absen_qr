@@ -77,6 +77,7 @@ $sekarang=date("Y-m-d");
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="../siswa/index.php">Siswa</a>
                         <a class="collapse-item" href="../akun/index.php">Admin</a>
+                        <a class="collapse-item" href="../akun_siswa/index.php">Akun Siswa</a>
                     </div>
                 </div>
             </li>
@@ -231,7 +232,7 @@ $sekarang=date("Y-m-d");
 										 
                                         <tbody>
                                          <?php  
-										$queri="Select * From absen INNER JOIN siswa ON absen.nis = siswa.nis" ;
+										$queri="Select * From absen INNER JOIN data_siswa ON absen.nis = data_siswa.nis" ;
 										$hasil=MySQLi_query ($koneksi,$queri);
 										$i = 1;
 										while ($data = mysqli_fetch_array ($hasil)){

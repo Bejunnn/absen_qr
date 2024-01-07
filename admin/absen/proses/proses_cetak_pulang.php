@@ -6,14 +6,11 @@ while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
 }
 
-<<<<<<< HEAD
-=======
 session_start();
 if (!isset($_SESSION['username'])) {
     header("Location: ../index.php");
     exit();
 }
->>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
 ?>
 <html>
 
@@ -48,7 +45,7 @@ if (!isset($_SESSION['username'])) {
                 <tbody>
                     <?php
                     $rows = mysqli_query($koneksi, "SELECT * FROM pulang
-                    INNER JOIN siswa ON pulang.nis = siswa.nis");
+                    INNER JOIN data_siswa ON pulang.nis = data_siswa.nis");
                     foreach ($rows as $data) :
 
                     ?>

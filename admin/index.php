@@ -190,7 +190,7 @@ if (isset($_SESSION['sebagai'])) {
                 <!-- End of Topbar -->            
                 <?php
                     $a = 0;
-                    $query  = "SELECT count(nis) AS tm FROM siswa WHERE nis";
+                    $query  = "SELECT count(nis) AS tm FROM data_siswa WHERE nis";
                     $sql    = mysqli_query($koneksi, $query);
                     if(mysqli_num_rows($sql)>0){
                     $data = mysqli_fetch_assoc($sql);

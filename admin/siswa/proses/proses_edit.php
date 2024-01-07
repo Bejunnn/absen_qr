@@ -23,11 +23,7 @@ include '../../../koneksi.php';
   if(in_array($ekstensi, $ekstensi_diperbolehkan) === true) {
     move_uploaded_file($file_tmp, '../../../assets/images/'.$nama_gambar_baru);
       // jalankan query UPDATE berdasarkan ID yang produknya kita edit
-<<<<<<< HEAD
-      $query  = "UPDATE siswa SET nis = '$nis', nama = '$nama',kelas = '$kelas',jurusan = '$jurusan',tempat_l = '$tempat_l',tanggal_l = '$tanggal_l', jenis_kelamin = '$jenis_kelamin',alamat = '$alamat',img = '$nama_gambar_baru'";
-=======
       $query  = "UPDATE data_siswa SET nis = '$nis', nama = '$nama',kelas = '$kelas'";
->>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
       $query .= "WHERE nis = '$nis'";
       $result = mysqli_query($koneksi, $query);
       // periska query apakah ada error

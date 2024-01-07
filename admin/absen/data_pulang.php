@@ -225,16 +225,10 @@ if (isset($_SESSION['sebagai'])) {
                                     </thead>
                                     <tbody>
                                         <?php 
+                                        $no = '1';
                                         $rows = mysqli_query($koneksi, "SELECT * FROM pulang
-<<<<<<< HEAD
-                                        INNER JOIN siswa ON pulang.nis = siswa.nis");
-                                        $no=1;
-=======
                                         INNER JOIN data_siswa ON pulang.nis = data_siswa.nis");
-      ;
->>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
                                         foreach ($rows as $data):
-
                                         ?>
                                             <tr>
                                                 <td align="center"><?= $no++ ?></td>

@@ -4,7 +4,7 @@ $koneksi = mysqli_connect("localhost","root", "", "absensiqr"); //pastikan uruta
 
 $nis = $_GET['nis'];
 
-$query = mysqli_query($koneksi, "SELECT * FROM siswa WHERE nis = '$nis'");
+$query = mysqli_query($koneksi, "SELECT * FROM data_siswa WHERE nis = '$nis'");
 $sw = mysqli_fetch_array($query);
 $data = array(
     'nama'              =>  $sw['nama'],

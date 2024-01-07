@@ -126,7 +126,7 @@ if (isset($_SESSION['sebagai'])) {
                 <div id="data" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item active" href="input.php">Masuk</a>
-                        <a class="collapse-item" href="input_plg.php">Pulang</a>
+                        <a class="collapse-item " href="input_plg.php">Pulang</a>
                     </div>
                 </div>
             </li>
@@ -160,6 +160,7 @@ if (isset($_SESSION['sebagai'])) {
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
 
+            
             </div>
         </ul>
         <!-- End of Sidebar -->
@@ -181,6 +182,7 @@ if (isset($_SESSION['sebagai'])) {
                         <ul class="navbar-nav pull-left">
                             <li><h4><div class="date">
 								<script type='text/javascript'>
+						<!--
 						var months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
 						var myDays = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
 						var date = new Date();
@@ -190,7 +192,8 @@ if (isset($_SESSION['sebagai'])) {
 							thisDay = myDays[thisDay];
 						var yy = date.getYear();
 						var year = (yy < 1000) ? yy + 1900 : yy;
-						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);
+						document.write(thisDay + ', ' + day + ' ' + months[month] + ' ' + year);		
+						//-->
 						</script></b></div></h4>
 
 						</li>
@@ -274,34 +277,34 @@ if (isset($_SESSION['sebagai'])) {
 
                     document.getElementById('result').innerHTML = `
 
-                    <div class="card" style="width: 18rem; onload="console_log(${result});">
+        <div class="card" style="width: 18rem; onload="console_log(${result});">
 
-                    <img src="../../assets/images/barcode-scan.gif" class="card-img-top" alt="...">
+        <img src="../../assets/images/barcode-scan.gif" class="card-img-top" alt="...">
 
-                    <div class="card-body">
+        <div class="card-body">
 
-                    <form id="input" action="validator.php" method="post">
+        <form id="input" action="validator_plg.php" method="post">
 
-                    <p style="font-size: 14px;" class="card-text">Bar Code Read Successfully : <span class="badge bg-primary">${result}</span></p>
+        <p style="font-size: 14px;" class="card-text">Bar Code Read Successfully : <span class="badge bg-primary">${result}</span></p>
 
-                    <p style="font-size: 14px;" class="card-text">Date : <span class="badge bg-primary">${today}</span></p>
+        <p style="font-size: 14px;" class="card-text">Date : <span class="badge bg-primary">${today}</span></p>
 
-                    <p style="font-size: 14px;" class="card-text">Capture Time : <span class="badge bg-primary">${time}</span></p>
+        <p style="font-size: 14px;" class="card-text">Capture Time : <span class="badge bg-primary">${time}</span></p>
 
-                    <input type="hidden" name="nis" value="${result}" id="result">
+        <input type="hidden" name="nis" value="${result}" id="result">
 
-                    <input type="hidden" name="time_val" value="${time}" id="capture_time">
+        <input type="hidden" name="time_val" value="${time}" id="capture_time">
 
-                    <input type="hidden" name="date_val" value="${today}" id="capture_date">
+        <input type="hidden" name="date_val" value="${today}" id="capture_date">
 
-                    <input type="submit" value="Submit" style="display: none;">
+        <input type="submit" value="Submit" style="display: none;">
 
-                    </form>
-                    
-                    </div>
+        </form>
 
-                    </div>
-                    `;
+        </div>
+
+        </div>
+        `;
                     // Simpan skrip berikut di bagian bawah body atau gunakan window.onload untuk memastikan formulir telah dimuat
                     document.getElementById('input').submit();
 

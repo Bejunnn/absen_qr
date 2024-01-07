@@ -49,7 +49,7 @@
 												<!--<th>Opsi</th>-->
 											</tr></thead><tbody>
 											<?php 
-											$brgs=mysqli_query($koneksi,"SELECT * from siswa");
+											$brgs=mysqli_query($koneksi,"SELECT * from data_siswa");
 											$no=1;
 											while($p=mysqli_fetch_array($brgs)){
 

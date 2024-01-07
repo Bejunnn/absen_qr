@@ -237,7 +237,7 @@ if (isset($_SESSION['sebagai'])) {
                                     
                                 </tr></thead><tbody>
                                 <?php 
-                                $form=mysqli_query($koneksi,"SELECT * FROM siswa order by nama, nis, kelas");
+                                $form=mysqli_query($koneksi,"SELECT * FROM data_siswa order by nama, nis, kelas");
                                 $no=1;
                                 while($b=mysqli_fetch_array($form)){
                                     $id = $b['nis'];

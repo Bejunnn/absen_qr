@@ -17,11 +17,7 @@ if ($result->num_rows == 1) {
     header("Location: siswa/index.php"); // Redirect to dashboard or any other page
 } else {
     // Login failed
-<<<<<<< HEAD
-    echo "<script>alert('nis atau nama Anda salah. Silahkan coba lagi!')</script>";
-=======
     echo "<script>alert('nis atau password Anda salah. Silahkan coba lagi!')</script>";
->>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
 }
 }
 $koneksi->close();

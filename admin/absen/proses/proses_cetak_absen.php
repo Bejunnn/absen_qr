@@ -1,6 +1,6 @@
 <?php
 include('../../../koneksi.php');
-$result = mysqli_query($koneksi, "SELECT * FROM absen INNER JOIN siswa ON absen.nis = siswa.nis");
+$result = mysqli_query($koneksi, "SELECT * FROM absen INNER JOIN data_siswa ON absen.nis = data_siswa.nis");
 $rows = [];
 while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;

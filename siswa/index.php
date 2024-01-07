@@ -2,12 +2,6 @@
 // Start the session
 session_start();
 
-// Check if 'nama' is set in the session, if not, redirect to the login page
-if (!isset($_SESSION['nama'])) {
-    header("Location: ../index.php");
-    exit();
-}
-
 if (!isset($_SESSION['nis'])) {
     header("Location: ../index.php");
     exit();

@@ -1,6 +1,6 @@
 <?php
 include "../koneksi.php";
-$query = "SELECT * FROM siswa";
+$query = "SELECT * FROM data_siswa";
 $result = mysqli_query($koneksi, $query);
 $data = mysqli_fetch_assoc($result);
 

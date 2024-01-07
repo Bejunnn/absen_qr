@@ -26,11 +26,7 @@ if (mysqli_num_rows($cek_result) > 0) {
         die("Query gagal dijalankan: " . mysqli_errno($koneksi) . " - " . mysqli_error($koneksi));
     } else {
         // tampilkan alert dan redirect ke halaman index.php
-<<<<<<< HEAD
         echo "<script>alert('Anda Berhasil Absen Pulang.');window.location='../input_plg.php';</script>";
-=======
-        echo "<script>alert('Anda Berhasil Absen.');window.location='../input_plg.php';</script>";
->>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
     }
 }
 ?>

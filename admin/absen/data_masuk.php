@@ -226,15 +226,10 @@ if (isset($_SESSION['sebagai'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-<<<<<<< HEAD
+                                        $no = '1';
                                         $rows = mysqli_query($koneksi, "SELECT * FROM masuk
-                                        INNER JOIN siswa ON masuk.nis = siswa.nis");
-                                        $no=1;
-=======
-                                        $rows = mysqli_query($koneksi, "SELECT * FROM masuk");;
->>>>>>> 5ac4603794051ef0221e5da70d361834eeb50460
+                                        INNER JOIN data_siswa ON masuk.nis = data_siswa.nis");
                                         foreach ($rows as $data) :
-
                                         ?>
                                             <tr>
                                                 <td align="center"><?= $no++ ?></td>

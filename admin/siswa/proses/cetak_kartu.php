@@ -22,7 +22,7 @@
 <body>
 
         <?php 
-        $brgs=mysqli_query($koneksi,"SELECT * from siswa");
+        $brgs=mysqli_query($koneksi,"SELECT * from data_siswa");
         while($row=mysqli_fetch_array($brgs)){
 
             ?>

@@ -2,7 +2,7 @@
 include '../../../koneksi.php';
 $nis = $_GET['nis'];
   // menampilkan data transaksi
-  $query = "SELECT * FROM siswa WHERE nis = '$nis'";
+  $query = "SELECT * FROM data_siswa WHERE nis = '$nis'";
   $result = mysqli_query($koneksi, $query); 
   $row = mysqli_fetch_assoc($result);
   
